@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/api', function () {
+    return response('Hello World', 200)
+    ->header('Content-Type', 'text/plain');
 });
-Route::get('auth/login', 'Auth\AuthController@login');
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post("/api/category/create" , 'CategoryManageController@create');
+Route::post("/api/category/del" , 'CategoryManageController@delete'); 
+Route::get("/api/category/find" , 'CategoryManageController@find');
+Route::post("/api/category/update" , 'CategoryManageController@update');
+Route::get("/api/test" , function() {
+    return response()->json(['foo' => 'bar'], 200);
+});
