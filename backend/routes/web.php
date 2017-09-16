@@ -16,14 +16,18 @@ Route::get('/api', function () {
     ->header('Content-Type', 'text/plain');
 });
 
-Route::post("/api/category/create" , 'CategoryManageController@create');
-Route::post("/api/category/del" , 'CategoryManageController@delete'); 
-Route::post("/api/category/find" , 'CategoryManageController@find');
-Route::post("/api/category/update" , 'CategoryManageController@update');
+// 目录管理
+Route::post("/api/category/create" , 'CategoryManageController@createCategory');
+Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
+Route::get("/api/category/getall" , 'CategoryManageController@getAllCategory');
 
-
+// 登录 
 Route::post("/api/auth/register" , 'AuthController@register');
 Route::post("/api/auth/login" , 'AuthController@login');
+
+// 测试
 Route::get("/api/test" , function() {
     return response()->json(['foo' => 'bar'], 200);
 });
+
+// 书籍管理

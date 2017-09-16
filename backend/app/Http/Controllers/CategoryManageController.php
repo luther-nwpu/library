@@ -7,50 +7,36 @@ use Illuminate\Http\Request;
 class CategoryManageController extends Controller
 {
     // 新增
-    public function create(){
-            // 新建模型对象
-        $post = new \App\Model\Category();
-        // 添加表字段内容
-        $post->name = "这是测试文章内容" ;
-        $post->created_at = date('Y-m-d H:i:s') ;
-        $post->updated_at = date('Y-m-d H:i:s') ;
-        $post->save();
-    }
-        // 查询
-    public function find(Request $request){
+    public function createCategory(Request $request){
         // 新建模型对象
-        $info = \App\Model\Category::find(3) ;
-        echo "delete success！";
-        echo $request;
-        Log::write('info', 'This is just an informational message!');
-        echo $request->path();
-        return $request;        
-        // 对表进行删除操作
+        $category = \App\Model\Category::where('name', $request->name)
+                        ->first();
+        if($category){
+            return response()->json(['create' => false], 200);
+        } else {
+        $post = new \App\Model\Category();
+            // 添加表字段内容
+            $post->name = $request->name ;
+            $post->created_at = date('Y-m-d H:i:s') ;
+            $post->updated_at = date('Y-m-d H:i:s') ;
+            $post->save();
+            return response()->json(['create' => true], 200);
+        }
     }
     // 删除
-    public function delete(){
-        $info = \App\Model\Category::find(3) ;
+    public function deleteCategory(Request $request){
+        $info = \App\Model\Category::find($request->id);
         $res = $info->delete() ;
         if($res){
-            echo "delete success！" ;
+            return response()->json(['delete' => true], 200);
+        } else {
+            return response()->json(['delete' => false], 200);
         }
         // dd($res);
     }
-    // 更新
-    public  function update(){
-        $info = \App\Model\Category::find(4) ;
-        if($info){
-            $info->name("这是一个新的测试标题") ;
-            $info->save();
-        }else{
-            echo "sorry , not found" ;
-        }
-    }
     // 操作数据表数据
-    public function getData(){
-        $data = \App\Model\Category::get() ;
-        $dataList = \App\Model\Category::orderBy("id" , "desc")
-                                ->where("id" , "<" , 100)
-                                ->get() ;
+    public function getAllCategory(){
+        $data = \App\Model\Category::all();
+        return $data;
     }
 }

@@ -4,6 +4,8 @@ import Hello from '@/components/Hello'
 import test from '@/components/test'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
+import Category from '@/components/Category'
+
 Vue.use(Router)
 
 export default new Router({
@@ -27,6 +29,11 @@ export default new Router({
       path: '/Login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/Category',
+      name: 'Category',
+      component: Category
     }
   ]
 })

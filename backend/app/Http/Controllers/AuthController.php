@@ -40,4 +40,7 @@ class AuthController extends Controller
             return response()->json(['registed' => false], 200);
         }
     }
+    public function isManager(){
+        
+    }
 }

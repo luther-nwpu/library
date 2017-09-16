@@ -6,39 +6,51 @@ use Illuminate\Http\Request;
 
 class BookManageController extends Controller
 {
-       public function create(){
+       public function storeBook(Request $request){
         // 新建模型对象
-        $post = new \App\Book() ;
+        $book = new \App\Book() ;
         // 添加表字段内容
-        $post->title = "这是测试文章标题" ;
-        $post->content = "这是测试文章内容" ;
-        $post->created_at = date('Y-m-d H:i:s') ;
-        $post->updated_at = date('Y-m-d H:i:s') ;
-        $post->save() ;
-        dd($post) ;
+        $book->bookname = $request->bookname;
+        $book->bookcode = $request->bookcode;
+        $book->created_at = date('Y-m-d H:i:s');
+        $book->updated_at = date('Y-m-d H:i:s');
+        $book->description = $request->description;
+        $book->category_id = $request->category_id;
+        $book->save() ;
     }
     // 查询
-    public function find(){
+    public function findBook(Request $request){
         // 新建模型对象
-        $info = \App\Post::find(3) ;
+        $book = \App\Book::where('id', $request->id);
+        return $book;
     }
     // 删除
-    public function delete(){
-        $info = \App\Post::find(3) ;
+    public function deleteBook(Request $request){
+        $info = \App\Book::find($request->id) ;
         $res = $info->delete() ;
         if($res){
-            echo "delete success！" ;
+            return response()->json(['delete' => true], 200);
+        } else {
+            return response()->json(['delete' => false], 200);
         }
         // dd($res);
     }
     // 更新
-    public  function update(){
-        $info = \App\Post::find(4) ;
-        if($info){
-            $info->title("这是一个新的测试标题") ;
-            $info->save();
+    public function updateBook(Request $request){
+        $book = \App\Book::find($request->id) ;
+        if($book){
+            $book->bookname = $request->bookname;
+            $book->bookcode = $request->bookcode;
+            $book->description = $request->description;
+            $book->category_id = $request->category_id;
+            $book->save();
+            return response()->json(['update' => true], 200);
         }else{
-            echo "sorry , not found" ;
+            return response()->json(['update' => false], 200);
         }
+    }
+    public function getAllBook(){
+        $books = \App\Book::all();
+        return $books;
     }
 }
