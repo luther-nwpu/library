@@ -22,6 +22,8 @@ class CategoryManageController extends Controller
         $info = \App\Model\Category::find(3) ;
         echo "delete success！";
         echo $request;
+        Log::write('info', 'This is just an informational message!');
+        echo $request->path();
         return $request;        
         // 对表进行删除操作
     }

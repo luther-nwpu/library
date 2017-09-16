@@ -41,11 +41,4 @@ class BookManageController extends Controller
             echo "sorry , not found" ;
         }
     }
-    // 操作数据表数据
-    public getData(){
-    	$data = \App\Post::get() ;
-    	$dataList = \App\Post::orderBy("id" , "desc")
-                               ->where("id" , "<" , 100)
-                               ->get() ;
-    }
 }
