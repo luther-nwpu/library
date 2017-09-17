@@ -15,6 +15,10 @@ class authmiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if(session('id')){
+            return $next($request);
+        } else {
+            return response()->json(['logined' => 0], 200);
+        }
     }
 }

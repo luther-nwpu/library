@@ -24,10 +24,8 @@ class CreateBorrowrecordTable extends Migration
             $table->foreign('book_id')
                   ->references('id')->on('books')
                   ->onDelete('cascade');
+            // 0 是借的   1 是续借的  2 是已经还的 
             $table->integer('type_id')->unsigned();
-            $table->foreign('type_id')
-                  ->references('id')->on('borrowtypes')
-                  ->onDelete('cascade');
             $table->timestamps();
         });
     }

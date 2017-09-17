@@ -8,4 +8,5 @@ class Order extends Model
 {
     // 连接借书表
     protected $table = 'borrowrecord';
+    
 }

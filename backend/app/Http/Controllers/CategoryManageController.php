@@ -32,7 +32,6 @@ class CategoryManageController extends Controller
         } else {
             return response()->json(['delete' => false], 200);
         }
-        // dd($res);
     }
     // 操作数据表数据
     public function getAllCategory(){

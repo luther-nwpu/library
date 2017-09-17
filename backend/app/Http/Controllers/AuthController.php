@@ -11,7 +11,8 @@ class AuthController extends Controller
     public function login(Request $request){
         //$value = session('id');
         //return $value;
-            // 新建模型对象
+        // 新建模型对象
+        $request->session()->flush();
         $User = \App\User::where('email', $request->email)
                         ->where('password', $request->password)
                         ->first();
@@ -20,6 +21,13 @@ class AuthController extends Controller
         } else {
             $request->session()->put('id', $User->id);
             $request->session()->put('email', $User->email);
+            $libraryManager = \App\Model\LibraryManager::where('user_id', $User->id)
+                                                       ->first();
+            if($libraryManager) {
+                $request->session()->put('role', 1);
+            } else {
+                $request->session()->put('role', 0);
+            }
             return response()->json(['logined' => true], 200);
         }
     }
@@ -36,11 +44,15 @@ class AuthController extends Controller
             $User->password = $request->password;
             $User->email = $request->email;
             $User->save();
-            return $request;
-            return response()->json(['registed' => false], 200);
+            return response()->json(['registed' => false, 'User'=> $User], 200);
         }
     }
-    public function isManager(){
-        
+    public function logout(){
+        $request->session()->flush();
+        if(session('id')){
+            return response()->json(['logout' => false], 200);
+        } else {
+            return response()->json(['logout' => true], 200);
+        }
     }
 }
