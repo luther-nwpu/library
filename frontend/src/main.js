@@ -9,6 +9,7 @@ import 'admin-lte/dist/css/AdminLTE.min.css'
 import 'bootstrap/dist/css/bootstrap.css'
 // AdminLTE
 import 'admin-lte/dist/css/skins/_all-skins.min.css'
+import $ from 'jquery'
 
 Vue.config.productionTip = false
 
