@@ -3,8 +3,12 @@ export default {
     component: resolve => require(['@/components/layout/fulllayout'], resolve),
     children: [
       {
-        path: 'manager',
-        component: resolve => require(['@/pages/admin/LibraryManager.vue'], resolve)
+        path: 'bookstore',
+        component: resolve => require(['@/pages/adminmanager/BookStore.vue'], resolve)
+      },
+      {
+        path: 'category',
+        component: resolve => require(['@/pages/adminmanager/Category.vue'], resolve)
       }
     ]
   }

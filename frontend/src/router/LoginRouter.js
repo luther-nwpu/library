@@ -1,11 +1,18 @@
-import AdminRouter from './AdminRouter.js'
-import AdminManagerRouter from './AdminManagerRouter.js'
-
 export default {
-  path: '/',
-  component: resolve => require(['@/components/layout/fulllayout'], resolve),
+  path: '/login',
+  component: resolve => require(['@/components/layout/nolayout'], resolve),
   children: [
-      AdminRouter,
-      AdminManagerRouter
+    {
+      path: 'authlogin',
+      component: resolve => require(['@/pages/Login/Login.vue'], resolve)
+    },
+    {
+      path: 'adminlogin',
+      component: resolve => require(['@/pages/Login/AdminLogin.vue'], resolve)
+    },
+    {
+      path: 'authregister',
+      component: resolve => require(['@/pages/Login/Register.vue'], resolve)
+    }
   ]
 }
