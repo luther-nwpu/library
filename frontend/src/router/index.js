@@ -8,6 +8,14 @@ import Category from '@/components/Category'
 import BookStore from '@/components/BookStore'
 import AdminLogin from '@/components/AdminLogin'
 import LibraryManager from '@/components/LibraryManager'
+import 'font-awesome/css/font-awesome.min.css'
+import 'admin-lte/bootstrap/css/bootstrap.min.css'
+import 'admin-lte/dist/css/AdminLTE.min.css'
+import 'bootstrap/dist/css/bootstrap.css'
+// AdminLTE
+import 'admin-lte/dist/css/skins/_all-skins.min.css'
+import 'font-awesome/css/font-awesome.min.css'
+
 
 Vue.use(Router)
 
