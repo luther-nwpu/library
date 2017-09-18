@@ -17,7 +17,7 @@ class BookManageController extends Controller
         $book->description = $request->description;
         $book->category_id = $request->category_id;
         $book->save();
-        return response()->json(['create' => true], 200);
+        return response()->json(['create' => true, 'book' => $book], 200);
     }
     // 查询
     public function findBook(Request $request){
@@ -51,6 +51,15 @@ class BookManageController extends Controller
     }
     public function getAllBook(){
         $books = \App\Model\Book::all();
-        return $books;
+        $array = array();
+        foreach($books as $book){
+            $borrow = \App\Model\Order::where('book_id', $book->id)
+                                        ->where('type_id', 0||1)
+                                        ->first();
+            $rootarray = array();
+            array_push($rootarray, $book, $borrow);
+            array_push($array, $rootarray);
+        }
+        return $array;
     }
 }

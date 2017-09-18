@@ -76,7 +76,15 @@ class OrderController extends Controller
         $orders = \App\Model\Order::where('user_id', $user_id)
                                     ->where('type_id', 0||1)
                                     ->get();
-        return $orders;
+        $array = array();
+        foreach($orders as $order){
+            $book = \App\Model\Book::where('id', $order->book_id)
+                                    ->first();
+            $subarray = array();
+            array_push($subarray, $order, $book);
+            array_push($array, $subarray);
+        }
+        return $array;
     }
 
     // 所有人都可以借， request 存的是当前用户id与书的id book_id    uset_id

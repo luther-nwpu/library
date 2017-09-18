@@ -31,16 +31,25 @@ Route::post("/api/admin/delete" , 'LibraryManagerController@deleteLibraryManager
 Route::get("/api/admin/getall",  'LibraryManagerController@getAllLibraryManager');
 Route::post("/api/admin/getuser", 'LibraryManagerController@getUser');
 
-Route::post("/api/book/create" , 'BookManageController@storeBook');  
-Route::get("/api/book/getall" , 'BookManageController@getAllBook');
 
-Route::post("/api/category/create" , 'CategoryManageController@createCategory');
-Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
+Route::post("/api/order/borrowbook", 'OrderController@BorrowBook');
+Route::post("/api/order/renewbook", 'OrderController@RenewBook');
+Route::post("/api/order/returnbook", 'OrderController@ReturnBook');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get("/api/order/myallbook", 'OrderController@GetMyAllBorrowedBook');
+    Route::post("/api/order/borrowmybook", 'OrderController@BorrowMyBook');
+    Route::post("/api/order/renewmyBook", 'OrderController@RenewMyBook');
+});
 Route::group(['middleware' => ['admin']], function () {
     // 书籍管理  
-    Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
-    Route::post("/api/book/update" , 'BookManageController@getAllBook');
 
+    Route::post("/api/category/create" , 'CategoryManageController@createCategory');
+    Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
     Route::get("/api/category/getall" , 'CategoryManageController@getAllCategory');
     // 目录管理
+    Route::get("/api/book/getall" , 'BookManageController@getAllBook');
+    Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
+    Route::post("/api/book/update" , 'BookManageController@getAllBook');
+    Route::post("/api/book/create" , 'BookManageController@storeBook');  
 });
