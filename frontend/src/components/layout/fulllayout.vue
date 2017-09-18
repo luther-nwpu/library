@@ -107,6 +107,7 @@
       </section>
       <!-- /.sidebar -->
     </aside>
+    <router-view></router-view>
   </div>
 </div>
 

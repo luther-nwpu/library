@@ -134,4 +134,23 @@ class OrderController extends Controller
             return response()->json(['renew' => true], 200);
         }
     }
+
+    public function GetBorrowedBook(Request $request) {
+        $user = \App\User::find($request->user_id);
+        if(!$user){
+            return response()->json(['get' => false], 200);
+        }
+        $orders = \App\Model\Order::where('user_id', $request->user_id)
+                                ->where('type_id', 0||1)
+                                ->get();
+        $array = array();
+        foreach($orders as $order){
+        $book = \App\Model\Book::where('id', $order->book_id)
+                ->first();
+        $subarray = array();
+        array_push($subarray, $order, $book);
+        array_push($array, $subarray);
+        }
+        return $array;
+    }
 }

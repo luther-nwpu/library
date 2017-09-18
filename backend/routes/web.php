@@ -35,6 +35,7 @@ Route::post("/api/admin/getuser", 'LibraryManagerController@getUser');
 Route::post("/api/order/borrowbook", 'OrderController@BorrowBook');
 Route::post("/api/order/renewbook", 'OrderController@RenewBook');
 Route::post("/api/order/returnbook", 'OrderController@ReturnBook');
+Route::post("/api/order/allborrowbook", 'OrderController@ReturnBook');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get("/api/order/myallbook", 'OrderController@GetMyAllBorrowedBook');
@@ -43,7 +44,6 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Route::group(['middleware' => ['admin']], function () {
     // 书籍管理  
-
     Route::post("/api/category/create" , 'CategoryManageController@createCategory');
     Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
     Route::get("/api/category/getall" , 'CategoryManageController@getAllCategory');
