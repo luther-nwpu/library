@@ -20,7 +20,7 @@ class CategoryManageController extends Controller
             $post->created_at = date('Y-m-d H:i:s') ;
             $post->updated_at = date('Y-m-d H:i:s') ;
             $post->save();
-            return response()->json(['create' => true], 200);
+            return response()->json(['create' => true, 'Category' => $post], 200);
         }
     }
     // 删除

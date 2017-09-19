@@ -19,6 +19,10 @@ class CreateBooksTable extends Migration
             $table->foreign('category_id')
                   ->references('id')->on('category')
                   ->onDelete('cascade');
+            $table->string('ISBN');
+            $table->string('bookauthor');
+            $table->string('bookpublishtime');
+            $table->string('booklocation');
             $table->string('bookname');
             $table->string('bookcode')->unique();
             $table->string('description');

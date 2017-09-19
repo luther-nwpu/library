@@ -7,7 +7,6 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
-
     <form>
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" v-model = "email">
@@ -27,14 +26,14 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" @click = "login()">Sign In</button>
+          <button type="button" class="btn btn-primary btn-block btn-flat" @click = "login()">Sign In</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
     <!-- /.social-auth-links -->
     <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
+    <a href="#/login/authregister" class="btn btn-danger btn-block btn-flat">Register a new membership</a>
 
   </div>
   <!-- /.login-box-body -->
@@ -67,6 +66,13 @@ export default {
                 password: this.password
             });
             console.log(res)
+            if (res.data.logined == false){
+              this.$Message.error("password error")
+            } else {
+              this.$router.push({//你需要接受路由的参数再跳转
+                            path: '/index'
+                          });
+            }
         }
     }
 }

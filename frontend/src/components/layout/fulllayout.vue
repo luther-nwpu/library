@@ -24,15 +24,15 @@
           <ul class="sidebar-menu" data-widget="tree">
             <li class="header">个人管理中心</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>我借的书</span></a></li>
+            <li><a href="#"><i class="fa fa-link"></i> <span>我借的书</span></a></li>
             <li><a href="#"><i class="fa fa-link"></i> <span>图书管理系统</span></a></li>
           </ul>
 
           <ul v-if="role == 0" class="sidebar-menu" data-widget="tree">
             <li class="header">图书管理中心</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>我借的书</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>图书管理系统</span></a></li>
+            <li><a href="#/admin/category"><i class="fa fa-link"></i> <span>目录管理</span></a></li>
+            <li><a href="#/admin/bookstore"><i class="fa fa-link"></i> <span>图书管理</span></a></li>
           </ul>
 
           <li v-if = "role == 0" class="active"><a href="#"><i class="fa fa-link"></i> <span>我借的书</span></a></li>
@@ -41,7 +41,7 @@
       <!-- /.sidebar -->
     </aside>
     <div class="content-wrapper">
-      <router-view></router-view>
+        <router-view></router-view>
     </div>
   </div>
 </div>

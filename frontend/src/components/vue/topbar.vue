@@ -2,7 +2,7 @@
     <div>
         <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="#/index" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>L</b>Ma</span>
             <!-- logo for regular state and mobile devices -->
@@ -27,36 +27,38 @@
             <div class="navbar-custom-menu">
                 <div v-if="logined">
                     <ul class="nav navbar-nav">
-                        <li><a href = "#">
-                            <div class="pull-left">
-                            Center
-                            </div>
-                            </a>
+                        <li>
+                            center
                         </li>
                         <!-- User Account Menu -->
-                        <li class="dropdown user user-menu">
+                        <li class="dropdown user user-menu" style ="width: 250px">
                         <!-- Menu Toggle Button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style ="height: 50px">
                             <!-- The user image in the navbar-->
                             <img src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs">{{user.name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
                                 <img :src="logo" class="img-circle" alt="User Image">
+                            </li>
+                            <li class="user-body">
+                               Email: {{user.email}}
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
                             <div class="pull-left">
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
-                            <div class="pull-right">
+                            <div class="pull-right" @click = "Signout()">
                                 <a href="#" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                             </li>
                         </ul>
                         </li>
+                        &nbsp   &nbsp   &nbsp   &nbsp   &nbsp   
+                   
                     </ul>
                 </div>
                 <div v-else>
@@ -64,10 +66,10 @@
                         <li class="dropdown user user-menu">
                             <a href = "#/login/authlogin" >
                                 <!-- Menu Toggle Button -->
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <a href="#/login/authlogin" class="dropdown-toggle" data-toggle="dropdown">
                                     <!-- The user image in the navbar-->
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                    <span class="hidden-xs" style ="color: white">Admin</span>
+                                    <span class="hidden-xs" style ="color: white">admin</span>
                                 </a>
                             </a>
                         </li>
@@ -75,7 +77,7 @@
                         <li class="dropdown user user-menu">
                             <a href = "#/login/authregister" >
                                 <!-- Menu Toggle Button -->
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <a href="#/login/authregister" class="dropdown-toggle" data-toggle="dropdown">
                                     <!-- The user image in the navbar-->
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                     <span class="hidden-xs" style ="color: white">register</span>
@@ -91,14 +93,30 @@
 </template>
 <script>
 import axios from 'axios'
-export default{
-    async created() {
-
-    },
+import logo from '@/assets/img/user2-160x160.jpg'
+export default {
     data() {
         return {
             logined: false,
-            logo: '@/assets/img/user2-160x160.jpg'
+            user: '',
+            logo: logo
+        }
+    },
+    async created() {
+        var res = await axios.post('/api/auth/admininfo');
+        console.log(res.data);
+        if(res.data.email) {
+            this.logined = true
+            this.user = res.data
+        } else {
+            this.logined = false
+        }
+    },
+    methods: {
+        async Signout(){
+            var res = await axios.post("/api/auth/logout");
+            console.log(res)
+            this.logined = false
         }
     }
 }

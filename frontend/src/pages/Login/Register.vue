@@ -36,12 +36,12 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat" @click = "register()">Register</button>
+                <button type="button" class="btn btn-primary btn-block btn-flat" @click = "register()">Register</button>
                 </div>
                 <!-- /.col -->
             </div>
             </form>
-            <a href="login.html" class="text-center">I already have a membership</a>
+            <a href="#/login/authlogin" class="text-center">I already have a membership</a>
         </div>
     <!-- /.form-box -->
     </div>
@@ -70,13 +70,23 @@ export default {
     },
     methods: {
         async register(){
-           var res = await axios.post('/api/auth/register', {
-               name: this.name,
-               email: this.email,
-               password: this.password
-           })
-           console.log(res)
-
+            if(this.name&&this.email&&this.password){
+                var res = await axios.post('/api/auth/register', {
+                    name: this.name,
+                    email: this.email,
+                    password: this.password
+                })
+                console.log(res)
+                    if(res.data.registed == false){
+                        this.$router.push({//你需要接受路由的参数再跳转
+                                    path: '/login/authlogin'
+                        });
+                    } else {
+                        this.$Message.error('Register Failed')
+                    }
+            } else {
+                this.$Message.error('NotNull')
+            }
         }
     }
 }

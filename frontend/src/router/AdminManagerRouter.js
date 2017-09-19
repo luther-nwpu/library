@@ -1,6 +1,6 @@
 export default {
     path: '/admin',
-    component: resolve => require(['@/components/layout/fulllayout'], resolve),
+    component: resolve => require(['@/pages/adminmanager/layout.vue'], resolve),
     children: [
       {
         path: 'bookstore',

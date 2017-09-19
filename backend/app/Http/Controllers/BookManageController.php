@@ -8,6 +8,11 @@ class BookManageController extends Controller
 {
     public function storeBook(Request $request){
         // 新建模型对象
+        $oldbook = \App\Model\Book::where('bookcode', $request->bookcode)
+                                 ->first();
+        if($oldbook){
+            return response()->json(['create' => false, 'err' => "this book already exist"], 200);
+        }
         $book = new \App\Model\Book();
         // 添加表字段内容
         $book->bookname = $request->bookname;
@@ -16,6 +21,9 @@ class BookManageController extends Controller
         $book->updated_at = date('Y-m-d H:i:s');
         $book->description = $request->description;
         $book->category_id = $request->category_id;
+        $book->ISBN = $request->ISBN;
+        $book->bookpublishtime = $request->bookpublishtime;
+        $book->booklocation = $request->booklocation;
         $book->save();
         return response()->json(['create' => true, 'book' => $book], 200);
     }
@@ -38,11 +46,14 @@ class BookManageController extends Controller
     // 更新
     public function updateBook(Request $request){
         $book = \App\Model\Book::find($request->id) ;
-        if($book){
+        if($book){  
             $book->bookname = $request->bookname;
             $book->bookcode = $request->bookcode;
             $book->description = $request->description;
             $book->category_id = $request->category_id;
+            $book->ISBN = $request->ISBN;
+            $book->bookpublishtime = $request->bookpublishtime;
+            $book->booklocation = $request->booklocation;
             $book->save();
             return response()->json(['update' => true], 200);
         }else{

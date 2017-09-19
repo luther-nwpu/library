@@ -35,6 +35,7 @@ export default {
             var res = await axios.post('/api/category/create', {
                 name: this.name
             });
+            this.categorys.push(res.data.Category);
             console.log(res);
         }
     }

@@ -24,6 +24,8 @@ Route::get("/api/test" , function() {
 // 登录 
 Route::post("/api/auth/register" , 'AuthController@register');
 Route::post("/api/auth/login" , 'AuthController@login');
+Route::post("/api/auth/admininfo", 'AuthController@MyLoginInformation');
+Route::post("/api/auth/logout", 'AuthController@logout');
 
 Route::post("/api/order/borrowbook", 'OrderController@BorrowBook');
 Route::post("/api/order/renewbook", 'OrderController@RenewBook');
@@ -45,7 +47,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
     Route::post("/api/book/update" , 'BookManageController@getAllBook');
     Route::post("/api/book/create" , 'BookManageController@storeBook');
-      
+
     Route::post("/api/admin/create" , 'LibraryManagerController@createLibraryManager');
     Route::post("/api/admin/delete" , 'LibraryManagerController@deleteLibraryManager');
     Route::get("/api/admin/getall",  'LibraryManagerController@getAllLibraryManager');

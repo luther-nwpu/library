@@ -26,6 +26,7 @@ class AuthController extends Controller
             if(!$User){
                 return response()->json(['logined' => false], 200);
             } else {
+                $request->session()->put('name', $User->name);
                 $request->session()->put('id', $User->id);
                 $request->session()->put('email', $User->email);
                 $libraryManager = \App\Model\LibraryManager::where('user_id', $User->id)
@@ -41,7 +42,7 @@ class AuthController extends Controller
     }
     public function register(Request $request){
         if($request->email == "admin"){
-            return response()->json(['registed' => false, 'error'=> "对不起，不能是admin"], 200);
+            return response()->json(['registed' => true, 'error'=> "对不起，不能是admin"], 200);
         }
         $existUser = \App\User::where('email', $request->email)
                     ->first();
@@ -58,7 +59,7 @@ class AuthController extends Controller
             return response()->json(['registed' => false, 'User'=> $User], 200);
         }
     }
-    public function logout(){
+    public function logout(Request $request){
         $request->session()->flush();
         if(session('id')){
             return response()->json(['logout' => false], 200);
@@ -66,7 +67,7 @@ class AuthController extends Controller
             return response()->json(['logout' => true], 200);
         }
     }
-    public function MyLoginInformation() {
-        return session();
+    public function MyLoginInformation(Request $request) {
+        return $request->session()->all();
     }
 }
