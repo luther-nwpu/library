@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="box-body">
       <div class="row" style = "margin-top: 20px; height: 50px">
         <span class = "col-md-2">
           <a href = "#/admin/createBook" class = "btn btn-primary" style = "margin-top: 12px"> <h1>addBook</h1> </a>
@@ -9,7 +9,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">AllBook</h3>
+              <h2>AllBook</h2>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

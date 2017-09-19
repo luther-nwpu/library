@@ -21,7 +21,9 @@ class LibraryManagerController extends Controller
                         $manager->created_at = date('Y-m-d H:i:s');
                         $manager->updated_at = date('Y-m-d H:i:s');
                         $manager->save();
-                        return response()->json(['created' => true, 'manager' => $manager], 200);
+                        $subarray = array();
+                        array_push($subarray, $manager, $user);
+                        return response()->json(['created' => true, 'manager' => $subarray], 200);
                     }
                 } else {
                     return response()->json(['created' => false], 200);
@@ -62,8 +64,15 @@ class LibraryManagerController extends Controller
 
     public function getAllLibraryManager(){
         if(session('role') == 2){
-            $item = \App\Model\LibraryManager::all();
-            return response()->json(['get' => true, 'libraryManager'=>$item], 200);
+            $items = \App\Model\LibraryManager::all();
+            $array = array();
+            foreach($items as $item){
+                $user = \App\User::find($item->user_id);
+                $subarray = array();
+                array_push($subarray, $item, $user);
+                array_push($array, $subarray);
+            }
+            return response()->json(['get' => true, 'libraryManager'=>$array], 200);
         } else {
             return response()->json(['logined' => false], 200);
         }

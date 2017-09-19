@@ -1,6 +1,6 @@
 <template>
-    <div style ="margin-top: 10px">
-        <div class ="row">
+    <div class="box-body">
+        <div class ="row" style ="margin-top: 10px">
         <span class ="col-md-3"></span>
         <span class ="col-md-2" style ="margin-top: 4px"><h3>Category Name:</h3></span>
         <span class ="col-md-2">

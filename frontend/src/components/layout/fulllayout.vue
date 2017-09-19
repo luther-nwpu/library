@@ -29,8 +29,8 @@
           <ul v-if="user.role == 0 || user.role == 1" class="sidebar-menu" data-widget="tree">
             <li class="header">Profile</li>
             <!-- Optionally, you can add icons to the links -->
-            <li><a href="#"><i class="fa fa-link"></i> <span>我借的书</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>我过去借的书</span></a></li>
+            <li><a href="#/authmanager/myborrowbook"><i class="fa fa-link"></i> <span>My Borrowed Book</span></a></li>
+            <li><a href="#/authmanager/MyHistory"><i class="fa fa-link"></i> <span>My History</span></a></li>
           </ul>
 
           <ul v-if="user.role == 1 || user.role == 2" class="sidebar-menu" data-widget="tree">
