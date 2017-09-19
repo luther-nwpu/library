@@ -31,7 +31,8 @@ class BookManageController extends Controller
     // 查询
     public function findBook(Request $request){
         // 新建模型对象
-        $book = \App\Model\Book::where('id', $request->id);
+        $book = \App\Model\Book::where('id', $request->id)
+            ->first();
         return $book;
     }
     // 删除
@@ -46,8 +47,13 @@ class BookManageController extends Controller
     }
     // 更新
     public function updateBook(Request $request){
-        $book = \App\Model\Book::find($request->id) ;
-        if($book){  
+        $book = \App\Model\Book::find($request->id);
+        if($book){ 
+            $book2 = \App\Model\Book::where('bookcode', $book->bookcode)
+                        ->first();
+            if($book2->id != $request->id){
+                return response()->json(['update' => false, 'err' => "this bookcode already exist"], 200);
+            }
             $book->bookname = $request->bookname;
             $book->bookcode = $request->bookcode;
             $book->description = $request->description;
@@ -59,7 +65,7 @@ class BookManageController extends Controller
             $book->save();
             return response()->json(['update' => true], 200);
         }else{
-            return response()->json(['update' => false], 200);
+            return response()->json(['update' => false, 'err' => 'Not Exist This Id'], 200);
         }
     }
     public function getAllBook(){

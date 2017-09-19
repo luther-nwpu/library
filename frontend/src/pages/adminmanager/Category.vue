@@ -1,9 +1,37 @@
 <template>
-    <div>
-        <input type="text" v-model = "name"/><button @click = "addcategory()"> 添加 </button>
-        <div v-for = "(category, index) in categorys" :key="index">
-            {{category.name}}
-            <button @click = "deletecategory(category.id, index)"> 删除</button>
+    <div style ="margin-top: 10px">
+        <div class ="row">
+        <span class ="col-md-3"></span>
+        <span class ="col-md-2" style ="margin-top: 4px"><h3>Category Name:</h3></span>
+        <span class ="col-md-2">
+            <input type="text" class = "form-control" v-model = "name"/>
+        </span>
+        <span class = "col-md-2">
+            <button @click = "addcategory()" style ="margin-top: 4px" class = "btn btn-primary">AddCategory</button>
+        </span>
+        </div>
+        <div class="col-xs-12" style = "margin-top: 5px">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Category Management</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive table-border no-padding">
+              <table class="table table-bordered table-hover">
+                <tbody>
+                <tr>
+                  <th><h2>Category Name</h2></th>
+                  <th><h2>Operator</h2></th>
+                </tr>
+                <tr v-for = "(category, index) in categorys" :key="index">
+                  <td><h2>{{category.name}}</h2></td>
+                  <td><button class = "btn btn-primary" @click = "deletecategory(category.id, index)"> 删除</button></td>
+                </tr>
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
     </div>
 </template>

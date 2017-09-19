@@ -1,8 +1,12 @@
 <template>
     <div>
-      <div class="row">
+      <div class="row" style = "margin-top: 20px; height: 50px">
+        <span class = "col-md-2">
+          <a href = "#/admin/createBook" class = "btn btn-primary" style = "margin-top: 12px"> <h1>addBook</h1> </a>
+        </span>
+      </div>
+      <div class="row" style = "margin-top: 20px">
         <div class="col-xs-12">
-        <router-link to = ""> 添加书籍 </router-link>
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">AllBook</h3>
@@ -37,8 +41,8 @@
                       <td> {{info[0].booklocation}}</td>
                       <td> {{info[3]}}</td>
                       <td>
-                      <button>eidt</button>
-                      <button @click = "deleteBook(info[0].id)">delete</button>
+                       <router-link :to="{ name: 'editBook', params: { id: info[0].id }}"> <button class="btn btn-xs blue"> Edit </button> </router-link>
+                   <button @click = "deleteBook(info[0].id)">delete</button>
                       </td>
                     </tr>
                   </tbody>

@@ -61,17 +61,22 @@ export default {
     },
     methods: {
         login: async function(){
-            var res = await axios.post('api/auth/login', {
-                email: this.email,
-                password: this.password
-            });
-            console.log(res)
-            if (res.data.logined == false){
-              this.$Message.error("password error")
+          if(this.email&&this.password)
+            {
+              var res = await axios.post('api/auth/login', {
+                  email: this.email,
+                  password: this.password
+              });
+              console.log(res)
+              if (res.data.logined == false){
+                this.$Message.error("password error")
+              } else {
+                this.$router.push({//你需要接受路由的参数再跳转
+                              path: '/index'
+                            });
+              }
             } else {
-              this.$router.push({//你需要接受路由的参数再跳转
-                            path: '/index'
-                          });
+              this.$Message.error('Please Write All Information');
             }
         }
     }

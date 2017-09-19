@@ -13,6 +13,11 @@ export default {
       {
         path: 'createBook',
         component: resolve => require(['@/pages/adminmanager/CreateBook.vue'], resolve)
+      },
+      {
+        name: 'editBook',
+        path: 'editBook/:id',
+        component: resolve => require(['@/pages/adminmanager/EditBook.vue'], resolve)  
       }
     ]
   }

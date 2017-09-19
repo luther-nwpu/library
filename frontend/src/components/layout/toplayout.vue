@@ -14,7 +14,6 @@ export default {
         topbar
     },
     async created() {
-      
     }
 }
 </script>

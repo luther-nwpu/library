@@ -45,8 +45,9 @@ Route::group(['middleware' => ['admin']], function () {
     // 目录管理
     Route::get("/api/book/getall" , 'BookManageController@getAllBook');
     Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
-    Route::post("/api/book/update" , 'BookManageController@getAllBook');
+    Route::post("/api/book/update" , 'BookManageController@updateBook');
     Route::post("/api/book/create" , 'BookManageController@storeBook');
+    Route::post("/api/book/findbook" , 'BookManageController@findBook');
 
     Route::post("/api/admin/create" , 'LibraryManagerController@createLibraryManager');
     Route::post("/api/admin/delete" , 'LibraryManagerController@deleteLibraryManager');

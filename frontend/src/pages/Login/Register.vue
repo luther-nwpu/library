@@ -23,7 +23,7 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Retype password">
+                <input type="password" class="form-control" placeholder="Retype password" v-model = "repassword">
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
             <div class="row">
@@ -65,18 +65,20 @@ export default {
         return {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            repassword: ''
         }
     },
     methods: {
         async register(){
             if(this.name&&this.email&&this.password){
-                var res = await axios.post('/api/auth/register', {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password
-                })
-                console.log(res)
+                if(this.repassword == this.password){
+                    var res = await axios.post('/api/auth/register', {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password
+                    })
+                    console.log(res);
                     if(res.data.registed == false){
                         this.$router.push({//你需要接受路由的参数再跳转
                                     path: '/login/authlogin'
@@ -84,6 +86,9 @@ export default {
                     } else {
                         this.$Message.error('Register Failed')
                     }
+                } else {
+                    this.$Message.error('Two Password Not Same')
+                }
             } else {
                 this.$Message.error('NotNull')
             }

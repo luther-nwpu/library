@@ -54,13 +54,12 @@
                                 <a href="#/common/allbook" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right" @click = "Signout()">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="#/index" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                             </li>
                         </ul>
                         </li>
                         &nbsp   &nbsp   &nbsp   &nbsp   &nbsp   
-                   
                     </ul>
                 </div>
                 <div v-else>
@@ -68,22 +67,19 @@
                         <li class="dropdown user user-menu">
                             <a href = "#/login/authlogin" >
                                 <!-- Menu Toggle Button -->
-                                <a href="#/login/authlogin" class="dropdown-toggle" data-toggle="dropdown">
                                     <!-- The user image in the navbar-->
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                     <span class="hidden-xs" style ="color: white">admin</span>
-                                </a>
                             </a>
                         </li>
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <a href = "#/login/authregister" >
                                 <!-- Menu Toggle Button -->
-                                <a href="#/login/authregister" class="dropdown-toggle" data-toggle="dropdown">
                                     <!-- The user image in the navbar-->
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                     <span class="hidden-xs" style ="color: white">register</span>
-                                </a>
+                            
                             </a>
                         </li>
                     </ul>
