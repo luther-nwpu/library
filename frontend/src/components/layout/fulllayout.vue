@@ -12,9 +12,9 @@
               <img :src="logo" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>{{user.name}}</p>
               <!-- Status -->
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <a href="#/admin"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
           </div>
           <!-- search form (Optional) -->
@@ -22,20 +22,29 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">个人管理中心</li>
+            <li class="header">DashBoard</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li><a href="#/common/allbook"><i class="fa fa-link"></i> <span>AllBook</span></a></li>
+          </ul>
+          <ul v-if="user.role == 0 || user.role == 1" class="sidebar-menu" data-widget="tree">
+            <li class="header">Profile</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="#"><i class="fa fa-link"></i> <span>我借的书</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>图书管理系统</span></a></li>
+            <li><a href="#"><i class="fa fa-link"></i> <span>我过去借的书</span></a></li>
           </ul>
 
-          <ul v-if="role == 0" class="sidebar-menu" data-widget="tree">
-            <li class="header">图书管理中心</li>
+          <ul v-if="user.role == 1 || user.role == 2" class="sidebar-menu" data-widget="tree">
+            <li class="header">BookManageMent</li>
             <!-- Optionally, you can add icons to the links -->
-            <li><a href="#/admin/category"><i class="fa fa-link"></i> <span>目录管理</span></a></li>
-            <li><a href="#/admin/bookstore"><i class="fa fa-link"></i> <span>图书管理</span></a></li>
+            <li><a href="#/admin/category"><i class="fa fa-link"></i> <span>CategoryManage</span></a></li>
+            <li><a href="#/admin/bookstore"><i class="fa fa-link"></i> <span>BookManage</span></a></li>
           </ul>
-
-          <li v-if = "role == 0" class="active"><a href="#"><i class="fa fa-link"></i> <span>我借的书</span></a></li>
+          
+          <ul v-if="user.role == 2" class="sidebar-menu" data-widget="tree">
+            <li class="header">ManagerManagement</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li><a href="#/admin/manager"><i class="fa fa-link"></i> <span>LibraryManager</span></a></li>
+          </ul>
         <!-- /.sidebar-menu -->
       </section>
       <!-- /.sidebar -->
@@ -51,18 +60,24 @@
 import '@/assets/js/adminlte.min.js'
 import logo from '@/assets/img/user2-160x160.jpg'
 import topbar from '@/components/vue/topbar.vue'
+import axios from 'axios'
 export default {
     data() {
       return {
         logo: logo,
         role: 0,
-        user: {}
+        user: ''
       }
     },
     methods: {
       shutmenu:function() {
         $('[data-toggle="push-menu"]').pushMenu('toggle');
       }
+    },
+    async created () {
+        var res = await axios.post('/api/auth/admininfo');
+        console.log(res.data);
+        this.user = res.data
     },
     components: {
       topbar

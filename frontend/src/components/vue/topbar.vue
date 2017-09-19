@@ -28,7 +28,9 @@
                 <div v-if="logined">
                     <ul class="nav navbar-nav">
                         <li>
-                            center
+                            <a href ="#/common/allbook">
+                                center
+                            </a>                            
                         </li>
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu" style ="width: 250px">
@@ -49,7 +51,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="#/common/allbook" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right" @click = "Signout()">
                                 <a href="#" class="btn btn-default btn-flat">Sign out</a>

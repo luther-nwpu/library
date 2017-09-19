@@ -24,6 +24,7 @@ class BookManageController extends Controller
         $book->ISBN = $request->ISBN;
         $book->bookpublishtime = $request->bookpublishtime;
         $book->booklocation = $request->booklocation;
+        $book->bookauthor = $request->bookauthor;
         $book->save();
         return response()->json(['create' => true, 'book' => $book], 200);
     }
@@ -54,6 +55,7 @@ class BookManageController extends Controller
             $book->ISBN = $request->ISBN;
             $book->bookpublishtime = $request->bookpublishtime;
             $book->booklocation = $request->booklocation;
+            $book->bookauthor = $request->bookauthor;
             $book->save();
             return response()->json(['update' => true], 200);
         }else{
@@ -64,11 +66,12 @@ class BookManageController extends Controller
         $books = \App\Model\Book::all();
         $array = array();
         foreach($books as $book){
+            $category = \App\Model\Category::find($book->category_id);
             $borrow = \App\Model\Order::where('book_id', $book->id)
                                         ->where('type_id', 0||1)
                                         ->first();
             $rootarray = array();
-            array_push($rootarray, $book, $borrow);
+            array_push($rootarray, $book, $category, $borrow);
             array_push($array, $rootarray);
         }
         return $array;

@@ -2,7 +2,6 @@
     <div>
       <div class="row">
         <div class="col-xs-12">
-        <router-link to = ""> 添加书籍 </router-link>
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">AllBook</h3>
@@ -37,8 +36,6 @@
                       <td> {{info[0].booklocation}}</td>
                       <td> {{info[3]}}</td>
                       <td>
-                      <button>eidt</button>
-                      <button @click = "deleteBook(info[0].id)">delete</button>
                       </td>
                     </tr>
                   </tbody>
@@ -72,13 +69,6 @@ export default {
         })
     },
     methods: {
-      async deleteBook(id, index) {
-            var res = await axios.post('/api/book/del', {
-                id: id
-            })
-            this.books.splice(index, 1);
-            console.log(res)
-        }
     }
 }
 </script>

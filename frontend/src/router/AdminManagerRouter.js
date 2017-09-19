@@ -9,6 +9,10 @@ export default {
       {
         path: 'category',
         component: resolve => require(['@/pages/adminmanager/Category.vue'], resolve)
+      },
+      {
+        path: 'createBook',
+        component: resolve => require(['@/pages/adminmanager/CreateBook.vue'], resolve)
       }
     ]
   }
