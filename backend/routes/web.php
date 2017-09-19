@@ -25,13 +25,6 @@ Route::get("/api/test" , function() {
 Route::post("/api/auth/register" , 'AuthController@register');
 Route::post("/api/auth/login" , 'AuthController@login');
 
-Route::post("/api/admin/login" , 'LibraryManagerController@login');
-Route::post("/api/admin/create" , 'LibraryManagerController@createLibraryManager');
-Route::post("/api/admin/delete" , 'LibraryManagerController@deleteLibraryManager');
-Route::get("/api/admin/getall",  'LibraryManagerController@getAllLibraryManager');
-Route::post("/api/admin/getuser", 'LibraryManagerController@getUser');
-
-
 Route::post("/api/order/borrowbook", 'OrderController@BorrowBook');
 Route::post("/api/order/renewbook", 'OrderController@RenewBook');
 Route::post("/api/order/returnbook", 'OrderController@ReturnBook');
@@ -51,5 +44,11 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get("/api/book/getall" , 'BookManageController@getAllBook');
     Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
     Route::post("/api/book/update" , 'BookManageController@getAllBook');
-    Route::post("/api/book/create" , 'BookManageController@storeBook');  
+    Route::post("/api/book/create" , 'BookManageController@storeBook');
+      
+    Route::post("/api/admin/create" , 'LibraryManagerController@createLibraryManager');
+    Route::post("/api/admin/delete" , 'LibraryManagerController@deleteLibraryManager');
+    Route::get("/api/admin/getall",  'LibraryManagerController@getAllLibraryManager');
+    Route::post("/api/admin/getuser", 'LibraryManagerController@getUser');
+    
 });

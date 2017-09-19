@@ -7,10 +7,6 @@ export default {
       component: resolve => require(['@/pages/Login/Login.vue'], resolve)
     },
     {
-      path: 'adminlogin',
-      component: resolve => require(['@/pages/Login/AdminLogin.vue'], resolve)
-    },
-    {
       path: 'authregister',
       component: resolve => require(['@/pages/Login/Register.vue'], resolve)
     }
