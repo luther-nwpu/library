@@ -32,6 +32,9 @@ Route::post("/api/order/renewbook", 'OrderController@RenewBook');
 Route::post("/api/order/returnbook", 'OrderController@ReturnBook');
 Route::post("/api/order/allborrowbook", 'OrderController@ReturnBook');
 
+
+Route::get("/api/book/getall" , 'BookManageController@getAllBook');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get("/api/order/myallbook", 'OrderController@GetMyAllBorrowedBook');
     Route::post("/api/order/borrowmybook", 'OrderController@BorrowMyBook');
@@ -43,7 +46,6 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
     Route::get("/api/category/getall" , 'CategoryManageController@getAllCategory');
     // 目录管理
-    Route::get("/api/book/getall" , 'BookManageController@getAllBook');
     Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
     Route::post("/api/book/update" , 'BookManageController@updateBook');
     Route::post("/api/book/create" , 'BookManageController@storeBook');

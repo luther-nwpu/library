@@ -1,6 +1,5 @@
-<template>  
-  <div>
-    <section class="content">
+<template>
+    <div>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -9,35 +8,38 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="row">              
-            <table class="table table-striped table-bordered" id="mytable">
-              <thead>
-                <tr>
-                  <th class="numeric"> BookId </th>
-                  <th class="numeric"> BookName </th>
-                  <th class="numeric"> Description </th>
-                  <th class="numeric"> BookCode </th>
-                  <th class="numeric"> ISBN </th>
-                  <th class="numeric"> BookLocation </th>
-                  <th class="numeric"> BookInfo </th>
-                  <th class="numeric"> Operation </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(info,index) in trainerInfoTables" :key="index">
-                  <td> {{info.engName}} </td>
-                  <td> {{info.chnName}} </td>
-                  <td> {{info.universityName}} </td>
-                  <td> {{info.emailAddress}} </td>
-                  <td> {{info}} </td>
-                  <td> {{info.phoneNumber}} </td>
-                  <td>
-                    <router-link :to="{ name: 'coachInfo', params: { id: info.id }}"><button class="btn btn-xs green"> 个人信息 </button></router-link>
-                    <router-link :to="{ name: 'team', params: { id: info.id }}"> <button class="btn btn-xs blue"> 我的队伍 </button> </router-link>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <div class="row" style ="margin-left: 5px; margin-right: 5px">              
+                <table class="table table-striped table-bordered" id="mytable">
+                  <thead>
+                    <tr>
+                      <th class="numeric"> BookId </th>
+                      <th class="numeric"> BookName </th>
+                      <th class="numeric"> CategoryName </th>
+                      <th class="numeric"> Description </th>
+                      <th class="numeric"> BookCode </th>
+                      <th class="numeric"> ISBN </th>
+                      <th class="numeric"> BookAuthor </th>
+                      <th class="numeric"> BookLocation </th>
+                      <th class="numeric"> BookInfo </th>
+                      <th class="numeric"> Operation </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(info,index) in books" :key="index">
+                      <td> {{info[0].id}} </td>
+                      <td> {{info[0].bookname}} </td>
+                      <td> {{info[1].name}}</td>
+                      <td> {{info[0].description}} </td>
+                      <td> {{info[0].bookcode}} </td>
+                      <td> {{info[0].ISBN}} </td>
+                      <td> {{info[0].bookauthor}} </td>
+                      <td> {{info[0].booklocation}}</td>
+                      <td> {{info[3]}}</td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
             <!-- /.box-body -->
@@ -47,29 +49,28 @@
         </div>
         <!-- /.col -->
       </div>
-      <!-- /.row -->
-    </section>
-  </div>
+    </div>
 </template>
 <script>
 import axios from 'axios'
 import '@/assets/js/jquery.dataTables.min'
 export default {
-  data(){
-    return {
-       trainerInfoTables: []
+    data () {
+        return {
+            books: ''
+        }
+    },
+    async created () {
+        var res = await axios.get('/api/book/getall');
+        console.log(res)
+        this.books = res.data;
+        this.$nextTick(function() {
+          $('#mytable').dataTable();
+        })
+    },
+    methods: {
     }
-  },
-  async mounted() {
-      var res = await axios.get('/api/book/getall');
-      console.log(res);
-      $(document).ready(function() {
-        $('#mytable').dataTable();
-      } );
-      this.$nextTick(function() {
-      })
-    }
-  }
+}
 </script>
-<style scoped>
+<style>
 </style>
