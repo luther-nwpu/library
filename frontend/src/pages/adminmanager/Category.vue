@@ -25,7 +25,7 @@
                 </tr>
                 <tr v-for = "(category, index) in categorys" :key="index">
                   <td><h2>{{category.name}}</h2></td>
-                  <td><button class = "btn btn-primary" @click = "deletecategory(category.id, index)"> 删除</button></td>
+                  <td><button class = "btn btn-primary" @click = "deletecategory(category.id, index)">Delete</button></td>
                 </tr>
               </tbody></table>
             </div>

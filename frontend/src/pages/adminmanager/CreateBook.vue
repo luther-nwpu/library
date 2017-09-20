@@ -119,12 +119,15 @@ export default {
                 });
                 console.log(res)
                 if(res.data.create){
+                    alert("Create Success");
                     this.$Message.info("Create Success");
                 } else {
+                    alert(res.data.err)
                     this.$Message.error(res.data.err)
                 }
                 
             } else {
+                alert("Please Write Full");
                 this.$Message.error("Please Write Full");
             }
         },

@@ -35,16 +35,12 @@ class LibraryManagerController extends Controller
 
     // email
     public function getUser(Request $request){
-        if(session('role') == 2){
-            $user = \App\User::where('email', $request->email)
-                            ->first();
-            if($user){
+        $user = \App\User::where('email', $request->email)
+                        ->first();
+        if($user){
             return response()->json(['search' => true, 'user' => $user], 200);
-            } else {
-            return response()->json(['search' => false], 200);
-            }
         } else {
-            return response()->json(['logined' => false], 200);    
+            return response()->json(['search' => false], 200);
         }
     }
 

@@ -30,15 +30,19 @@ Route::post("/api/auth/logout", 'AuthController@logout');
 Route::post("/api/order/borrowbook", 'OrderController@BorrowBook');
 Route::post("/api/order/renewbook", 'OrderController@RenewBook');
 Route::post("/api/order/returnbook", 'OrderController@ReturnBook');
-Route::post("/api/order/allborrowbook", 'OrderController@ReturnBook');
+Route::post("/api/order/allborrowbook", 'OrderController@GetBorrowedBook');
+Route::post("/api/order/getuser", 'LibraryManagerController@getUser');
+Route::post("/api/order/findbook" , 'BookManageController@findBook');
 
 
 Route::get("/api/book/getall" , 'BookManageController@getAllBook');
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get("/api/order/myallbook", 'OrderController@GetMyAllBorrowedBook');
     Route::post("/api/order/borrowmybook", 'OrderController@BorrowMyBook');
     Route::post("/api/order/renewmyBook", 'OrderController@RenewMyBook');
+    Route::post("/api/order/myhistorybook", 'OrderController@GetMyHistoryBook');
 });
 Route::group(['middleware' => ['admin']], function () {
     // 书籍管理  

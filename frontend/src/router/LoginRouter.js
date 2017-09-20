@@ -9,6 +9,10 @@ export default {
     {
       path: 'authregister',
       component: resolve => require(['@/pages/Login/Register.vue'], resolve)
+    },
+    {
+      path: 'borrowbook',
+      component: resolve => require(['@/pages/NoLogin/BorrowBook.vue'], resolve)
     }
   ]
 }

@@ -145,12 +145,14 @@ export default {
                 });
                 console.log(res)
                 if(res.data.update){
+                    alert("Update Success");
                     this.$Message.info("Update Success");
                 } else {
                     this.$Message.error(res.data.err)
                 }
                 
             } else {
+                alert("Please Write Full");
                 this.$Message.error("Please Write Full");
             }
         },

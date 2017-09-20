@@ -153,4 +153,24 @@ class OrderController extends Controller
         }
         return $array;
     }
+
+    // 我的所有历史读书
+    public function GetMyHistoryBook(){
+        $user_id = session('id');
+        $user = \App\User::find($user_id);
+        if(!$user){
+            return response()->json(['get' => false], 200);
+        }
+        $orders = \App\Model\Order::where('user_id', $request->user_id)
+                                ->get();
+        $array = array();
+        foreach($orders as $order){
+        $book = \App\Model\Book::where('id', $order->book_id)
+                ->first();
+        $subarray = array();
+        array_push($subarray, $order, $book);
+        array_push($array, $subarray);
+        }
+        return $array;
+    }
 }
