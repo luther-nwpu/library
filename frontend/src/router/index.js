@@ -15,6 +15,10 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/test',
+      component: resolve => require(['@/pages/test.vue'], resolve)
+    },
     topLayoutBarLayout,
     fullLayout,
     noneLayout,
