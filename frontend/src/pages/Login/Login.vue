@@ -2,7 +2,9 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <!-- <a href="../../index2.html"> -->
+    <b>Admin</b>LTE
+    <!-- </a> -->
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -16,24 +18,27 @@
         <input type="password" class="form-control" placeholder="Password" v-model = "password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
+      <!-- <div class="row"> -->
+        <!-- <div class="col-xs-8" style="margin-left:-20px"> -->
+          <div class="checkbox icheck pull-left">
             <label>
               <input type="checkbox"> Remember Me
             </label>
           </div>
-        </div>
+        <!-- </div> -->
         <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="button" class="btn btn-primary btn-block btn-flat" @click = "login()">Sign In</button>
-        </div>
+        <!-- <div class="col-xs-4"> -->
+          
+        <!-- </div> -->
         <!-- /.col -->
-      </div>
+      <!-- </div> -->
     </form>
+    <button type="button" class="btn btn-primary btn-lg btn-block" @click = "login()">Sign In</button>
     <!-- /.social-auth-links -->
-    <a href="#">I forgot my password</a><br>
-    <a href="#/login/authregister" class="btn btn-danger btn-block btn-flat">Register a new membership</a>
+    <div class="checkbox no-padding" style="margin-bottom:25px">
+          <a href="#/login/authregister" class="a pull-left">Register Now</a>
+          <a href="#" class="a pull-right">Forgot Password ?</a>
+    </div>
 
   </div>
   <!-- /.login-box-body -->

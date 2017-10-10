@@ -1,6 +1,6 @@
 import LoginRouter from './LoginRouter'
 export default {
-  path: '/',
+  path: '/no',
   component: resolve => require(['@/components/layout/nolayout'], resolve),
   children: [
     LoginRouter,

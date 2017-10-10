@@ -7,7 +7,7 @@
         </div>
 
         <div class="register-box-body">
-            <p class="login-box-msg">Register a new membership</p>
+            <p class="login-box-msg">Register a new account</p>
 
             <form>
             <div class="form-group has-feedback">
@@ -26,22 +26,26 @@
                 <input type="password" class="form-control" placeholder="Retype password" v-model = "repassword">
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
-            <div class="row">
-                <div class="col-xs-8">
-                <div class="checkbox icheck">
+            <!-- <div class="row"> -->
+                <!-- <div class="col-xs-8"> -->
+                <div class="checkbox icheck pull-left">
                     <label>
                     <input type="checkbox"> I agree to the <a href="#">terms</a>
                     </label>
                 </div>
-                </div>
+                <!-- </div> -->
                 <!-- /.col -->
-                <div class="col-xs-4">
-                <button type="button" class="btn btn-primary btn-block btn-flat" @click = "register()">Register</button>
-                </div>
+                <!-- <div class="col-xs-4">
+                
+                </div> -->
                 <!-- /.col -->
-            </div>
+            <!-- </div> -->
             </form>
-            <a href="#/login/authlogin" class="text-center">I already have a membership</a>
+            <button type="button" class="btn btn-primary btn-lg btn-block" @click = "register()">Register</button>
+            <div style="margin-top:10px">
+                <a href="#/login/authlogin" class="text-center">I already have a account</a>
+            </div>
+            
         </div>
     <!-- /.form-box -->
     </div>

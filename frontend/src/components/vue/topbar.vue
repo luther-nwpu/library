@@ -54,7 +54,7 @@
                                 <a href="#/common/allbook" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right" @click = "Signout()">
-                                <a href="#/index" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="#/index" class="btn btn-default btn-flat">Sign Out</a>
                             </div>
                             </li>
                         </ul>
@@ -63,13 +63,13 @@
                     </ul>
                 </div>
                 <div v-else>
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" style="margin-right:20px">
                         <li class="dropdown user user-menu">
                             <a href = "#/login/authlogin" >
                                 <!-- Menu Toggle Button -->
                                     <!-- The user image in the navbar-->
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                    <span class="hidden-xs" style ="color: white">admin</span>
+                                    <span class="hidden-xs" style ="color: white">Sign In</span>
                             </a>
                         </li>
                         <!-- User Account Menu -->
