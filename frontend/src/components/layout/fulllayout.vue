@@ -31,11 +31,15 @@
             <!-- Optionally, you can add icons to the links -->
             <li><a href="#/authmanager/myborrowbook"><i class="fa fa-link"></i> <span>My Borrowed Book</span></a></li>
             <li><a href="#/authmanager/MyHistory"><i class="fa fa-link"></i> <span>My History</span></a></li>
+            <li><a href="#/authmanager/renewbook"><i class="fa fa-link"></i> <span>Renew Book</span></a></li>
+            
           </ul>
 
           <ul v-if="user.role == 1 || user.role == 2" class="sidebar-menu" data-widget="tree">
             <li class="header">BookManageMent</li>
             <!-- Optionally, you can add icons to the links -->
+            <li><a href="#/admin/borrowbook"><i class="fa fa-link"></i> <span>Borrow Book</span></a></li>
+            <li><a href="#/admin/returnbook"><i class="fa fa-link"></i> <span>Return Book</span></a></li>
             <li><a href="#/admin/category"><i class="fa fa-link"></i> <span>CategoryManage</span></a></li>
             <li><a href="#/admin/bookstore"><i class="fa fa-link"></i> <span>BookManage</span></a></li>
           </ul>

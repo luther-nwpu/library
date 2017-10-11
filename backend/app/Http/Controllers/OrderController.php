@@ -25,15 +25,21 @@ class OrderController extends Controller
             return response()->json(['create' => false], 200);
         } else {
             // 新建模型对象
-            $order = new \App\order() ;
+            $hasborrowed = \App\Model\Order::find($request->book_id);
+            if($hasborrowed){
+                if($hasborrowed->user_id = $request->user_id){
+                    return response()->json(['create' => false, 'err' => 'Cannt borrow the same book'], 200);
+                }
+            }
+            $order = new \App\Model\Order() ;
             $order->user_id = $request->user_id;
             $order->book_id = $request->book_id;
             $order->return_time = date('Y-m-d H:i:s');
             $order->created_at = date('Y-m-d H:i:s');
             $order->updated_at = date('Y-m-d H:i:s');
-            $order->type = 0;
+            $order->type_id = 0;
             $order->save();
-            return response()->json(['create' => true], 200);
+            return response()->json(['create' => true, 'info' => $hasborrowed], 200);
         }
     }
 

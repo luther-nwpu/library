@@ -6,8 +6,6 @@
         </div>
     </div> -->
     <body class="page">
-
-		
 		<div>
             <router-view></router-view>
         </div>

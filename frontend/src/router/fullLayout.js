@@ -3,7 +3,7 @@ import AdminManagerRouter from './AdminManagerRouter.js'
 import AuthManagerRouter from './AuthManagerRouter.js'
 import commonRouter from './commonRouter.js'
 export default {
-  path: '/',
+  path: '/  ',
   component: resolve => require(['@/components/layout/fulllayout'], resolve),
   children: [
       AuthManagerRouter,

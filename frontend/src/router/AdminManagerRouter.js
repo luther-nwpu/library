@@ -18,6 +18,14 @@ export default {
         name: 'editBook',
         path: 'editBook/:id',
         component: resolve => require(['@/pages/adminmanager/EditBook.vue'], resolve)  
+      },
+       {
+        path: 'borrowbook',
+        component: resolve => require(['@/pages/adminmanager/borrowbook.vue'], resolve)
+      },
+      {
+        path: 'returnbook',
+        component: resolve => require(['@/pages/adminmanager/returnbook.vue'], resolve)
       }
     ]
   }

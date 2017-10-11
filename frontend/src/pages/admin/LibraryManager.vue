@@ -8,7 +8,7 @@
         <div class = "row">
             <span class = "col-md-3"><h2> email:</h2> </span> 
             <span class = "col-md-3"><input type = "text" class = "form-control" v-model = "email"/></span>
-            <span class = "col-md-2"> <button @click = "search()"> 搜索</button> </span>
+            <span class = "col-md-2"> <button @click = "search()"> Search</button> </span>
         </div>
         <table class="table table-striped table-bordered" id="mytable">
             <thead>
