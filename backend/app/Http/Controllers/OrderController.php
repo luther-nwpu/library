@@ -9,14 +9,17 @@ class OrderController extends Controller
     // 所有人都可以借， request 存的是当前用户id与书的id book_id    uset_id
     public function BorrowBook(Request $request) {
         $book = \App\Model\Order::where('book_id', $request->book_id)
-                                ->where('type_id', 0||1)
+                                ->where('type_id', '<>', 2)
                                 ->first();
         $user = \App\User::find($request->user_id);
         if(!$user)
         {
-            return response()->json(['create' => false], 200);
+            return response()->json(['create' => false, 'err' => 'No user'], 200);
         }
         $borrowbook = \App\Model\Book::find($request->book_id);
+        $hborrowed = \App\Model\Order::where('book_id', $request->book_id)
+                                        -> where('user_id', $request->user_id)
+                                        ->first();
         if(!$borrowbook)
         {
             return response()->json(['create' => false], 200);
@@ -25,11 +28,8 @@ class OrderController extends Controller
             return response()->json(['create' => false], 200);
         } else {
             // 新建模型对象
-            $hasborrowed = \App\Model\Order::find($request->book_id);
-            if($hasborrowed){
-                if($hasborrowed->user_id = $request->user_id){
-                    return response()->json(['create' => false, 'err' => 'Cannt borrow the same book'], 200);
-                }
+            if($hborrowed){
+                return response()->json(['create' => false, 'err' => 'Cannt borrow the same book'], 200);
             }
             $order = new \App\Model\Order() ;
             $order->user_id = $request->user_id;
@@ -39,7 +39,7 @@ class OrderController extends Controller
             $order->updated_at = date('Y-m-d H:i:s');
             $order->type_id = 0;
             $order->save();
-            return response()->json(['create' => true, 'info' => $hasborrowed], 200);
+            return response()->json(['create' => true], 200);
         }
     }
 
@@ -66,10 +66,11 @@ class OrderController extends Controller
     // request book_id 直接还书
     public function ReturnBook(Request $request) {
         $order = \App\Model\Order::where('book_id', $request->book_id)
-                          ->first();
-        $order->type_id = 2;
-        $order->save();
+                -> where('user_id', $request->user_id)
+                ->first();
         if($order){
+            $order->type_id = 2;
+            $order->save();
             return response()->json(['delete' => true], 200);
         } else {
             return response()->json(['delete' => false], 200);
@@ -77,14 +78,15 @@ class OrderController extends Controller
     }
 
     //通过 session
-    public function GetMyAllBorrowedBook() {
+    public function GetMyAllBorrowedBook(Request $request) {
+
         $user_id = session('id');
         $orders = \App\Model\Order::where('user_id', $user_id)
-                                    ->where('type_id', 0||1)
+                                    ->where('type_id','<>', 2 )
                                     ->get();
         $array = array();
         foreach($orders as $order){
-            $book = \App\Model\Book::where('id', $order->book_id)
+            $book = \App\Model\Book::where('bookcode', $order->book_id)
                                     ->first();
             $subarray = array();
             array_push($subarray, $order, $book);
@@ -167,15 +169,15 @@ class OrderController extends Controller
         if(!$user){
             return response()->json(['get' => false], 200);
         }
-        $orders = \App\Model\Order::where('user_id', $request->user_id)
+        $orders = \App\Model\Order::where('user_id', $user_id)
                                 ->get();
         $array = array();
         foreach($orders as $order){
-        $book = \App\Model\Book::where('id', $order->book_id)
+            $book = \App\Model\Book::where('bookcode', $order->book_id)
                 ->first();
-        $subarray = array();
-        array_push($subarray, $order, $book);
-        array_push($array, $subarray);
+            $subarray = array();
+            array_push($subarray, $order, $book);
+            array_push($array, $subarray);
         }
         return $array;
     }

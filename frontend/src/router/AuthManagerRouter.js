@@ -9,10 +9,6 @@ export default {
       {
         path: 'MyHistory',
         component: resolve => require(['@/pages/authmanager/MyHistory.vue'], resolve)
-      },
-      {
-        path: 'renewbook',
-        component: resolve => require(['@/pages/authmanager/RenewBook.vue'], resolve)
       }
     ]
   }

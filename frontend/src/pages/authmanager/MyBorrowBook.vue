@@ -4,41 +4,41 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h2>MyAllBook</h2>
+              <h2>MyBorrowedBook</h2>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="row" style ="margin-left: 5px; margin-right: 5px">              
+              <div class="row" style ="margin-left: 1px; margin-right: 1px">              
                 <table class="table table-striped table-bordered" id="mytable">
                   <thead>
                     <tr>
                       <th class="numeric"> BookId </th>
                       <th class="numeric"> BookName </th>
-                      <th class="numeric"> CategoryName </th>
+                      <!-- <th class="numeric"> CategoryName </th> -->
                       <th class="numeric"> Description </th>
                       <th class="numeric"> BookCode </th>
                       <th class="numeric"> ISBN </th>
                       <th class="numeric"> BookAuthor </th>
                       <th class="numeric"> BookLocation </th>
-                      <th class="numeric"> BookInfo </th>
+                      <!-- <th class="numeric"> BookInfo </th> -->
                       <th class="numeric"> Operation </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(info,index) in books" :key="index">
                       <td> {{info[0].id}} </td>
-                      <td> {{info[0].bookname}} </td>
-                      <td> {{info[1].name}}</td>
-                      <td> {{info[0].description}} </td>
-                      <td> {{info[0].bookcode}} </td>
-                      <td> {{info[0].ISBN}} </td>
-                      <td> {{info[0].bookauthor}} </td>
-                      <td> {{info[0].booklocation}}</td>
-                      <td> {{info[3]}}</td>
-                      <td>
-                       <router-link :to="{ name: 'editBook', params: { id: info[0].id }}"> <button class="btn btn-xs blue"> Edit </button> </router-link>
-                   <button @click = "deleteBook(info[0].id)">delete</button>
-                      </td>
+                      <td> {{info[1].bookname}} </td>
+                      <!-- <td> {{info[1].name}}</td> -->
+                      <td> {{info[1].description}} </td>
+                      <td> {{info[1].bookcode}} </td>
+                      <td> {{info[1].ISBN}} </td>
+                      <td> {{info[1].bookauthor}} </td>
+                      <td> {{info[1].booklocation}}</td>
+                      <td> <button type="button" class="btn btn-primary">Renew</button></td>
+                      <!-- <td> -->
+                       <!-- <router-link :to="{ name: 'editBook', params: { id: info[0].id }}"> <button class="btn btn-xs blue"> Edit </button> </router-link> -->
+                   <!-- <button @click = "deleteBook(info[0].id)">delete</button> -->
+                      <!-- </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -55,6 +55,7 @@
 </template>
 <script>
 import axios from 'axios'
+import '@/assets/js/jquery.dataTables.min'
 export default {
     data(){
         return {
@@ -64,7 +65,10 @@ export default {
     async created() {
         var res = await axios.get('/api/order/myallbook');
         console.log(res);
-        this.books = res.data
+        this.books = res.data;
+        this.$nextTick(function() {
+          $('#mytable').dataTable();
+        })
     }
 }    
 </script>

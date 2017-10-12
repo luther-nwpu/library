@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/api/order/myallbook", 'OrderController@GetMyAllBorrowedBook');
     Route::post("/api/order/borrowmybook", 'OrderController@BorrowMyBook');
     Route::post("/api/order/renewmyBook", 'OrderController@RenewMyBook');
-    Route::post("/api/order/myhistorybook", 'OrderController@GetMyHistoryBook');
+    Route::get("/api/order/myhistorybook", 'OrderController@GetMyHistoryBook');
 });
 Route::group(['middleware' => ['admin']], function () {
     // 书籍管理  

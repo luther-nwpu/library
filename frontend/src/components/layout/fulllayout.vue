@@ -30,9 +30,7 @@
             <li class="header">Profile</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="#/authmanager/myborrowbook"><i class="fa fa-link"></i> <span>My Borrowed Book</span></a></li>
-            <li><a href="#/authmanager/MyHistory"><i class="fa fa-link"></i> <span>My History</span></a></li>
-            <li><a href="#/authmanager/renewbook"><i class="fa fa-link"></i> <span>Renew Book</span></a></li>
-            
+            <li><a href="#/authmanager/MyHistory"><i class="fa fa-link"></i> <span>My History</span></a></li>            
           </ul>
 
           <ul v-if="user.role == 1 || user.role == 2" class="sidebar-menu" data-widget="tree">
