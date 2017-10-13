@@ -34,7 +34,7 @@ class OrderController extends Controller
             $order = new \App\Model\Order() ;
             $order->user_id = $request->user_id;
             $order->book_id = $request->book_id;
-            $order->return_time = date('Y-m-d H:i:s');
+            $order->return_time = date('Y-m-d H:i:s') + + 3600*24*30;
             $order->created_at = date('Y-m-d H:i:s');
             $order->updated_at = date('Y-m-d H:i:s');
             $order->type_id = 0;
