@@ -33,7 +33,7 @@
             <li><a href="#/authmanager/MyHistory"><i class="fa fa-link"></i> <span>My History</span></a></li>            
           </ul>
 
-          <ul v-if="user.role == 1 || user.role == 2" class="sidebar-menu" data-widget="tree">
+          <ul v-if="user.role == 1" class="sidebar-menu" data-widget="tree">
             <li class="header">BookManageMent</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="#/admin/borrowbook"><i class="fa fa-link"></i> <span>Borrow Book</span></a></li>
