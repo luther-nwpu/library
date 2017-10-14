@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    // 所有人都可以借， request 存的是当前用户id与书的id book_id    uset_id
+    // 所有人都可以借， request 存的是当前用户id与书的id book_id    user_id
     public function BorrowBook(Request $request) {
         $book = \App\Model\Order::where('book_id', $request->book_id)
                                 ->where('type_id', '<>', 2)
@@ -34,7 +34,7 @@ class OrderController extends Controller
             $order = new \App\Model\Order() ;
             $order->user_id = $request->user_id;
             $order->book_id = $request->book_id;
-            $order->return_time = date('Y-m-d H:i:s') + + 3600*24*30;
+            $order->return_time = date('Y-m-d H:i:s',strtotime('+1 month'));
             $order->created_at = date('Y-m-d H:i:s');
             $order->updated_at = date('Y-m-d H:i:s');
             $order->type_id = 0;
@@ -66,7 +66,7 @@ class OrderController extends Controller
     // request book_id 直接还书
     public function ReturnBook(Request $request) {
         $order = \App\Model\Order::where('book_id', $request->book_id)
-                -> where('user_id', $request->user_id)
+                -> where('type_id', 0)
                 ->first();
         if($order){
             $order->type_id = 2;
