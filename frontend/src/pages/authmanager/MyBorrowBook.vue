@@ -59,13 +59,15 @@ import '@/assets/js/jquery.dataTables.min'
 export default {
     data(){
         return {
-            books: ''
+            books: []
         }
     },
     async created() {
         var res = await axios.get('/api/order/myallbook');
         console.log(res);
-        this.books = res.data;
+        if(res.data == null) {
+          this.books = res.data;
+        }
         this.$nextTick(function() {
           $('#mytable').dataTable();
         })
