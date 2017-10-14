@@ -8,7 +8,7 @@
     </div>
 
     <div class="col-md-6">
-        书籍id: <input type = "text" v-model = "book_id"/>
+        Bookid: <input type = "text" v-model = "book_id"/>
         <button @click = "GetBookInfo()">Search</button>
         {{bookinfo}}
         <button @click = "borrowBook()">Borrow Book</button>
