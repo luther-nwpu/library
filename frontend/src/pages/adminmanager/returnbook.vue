@@ -1,7 +1,6 @@
 <template>
     <div>
-        人的id: <input type="text" v-model = "user_id"/> 
-        书的id: <input type="text" v-model = "book_id"/> <button @click = "returnbook"> 还书 </button>
+        Bookid: <input type="text" v-model = "book_id"/> <button @click = "returnbook"> return Book </button>
     </div>
 </template>
 <script>
@@ -9,15 +8,15 @@ import axios from 'axios'
 export default {
     data() {
         return {
+            email: '',
             book_id: '',
             user_id: ''
         }
     },
     methods: {
         async returnbook() {
-            if (this.user_id && this.book_id) {
+            if (this.book_id) {
                 var res = await axios.post('/api/order/returnbook', {
-                    user_id: this.user_id,
                     book_id: this.book_id
                 });
                 console.log(res)
