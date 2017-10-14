@@ -86,8 +86,9 @@ class OrderController extends Controller
                                     ->get();
         $array = array();
         foreach($orders as $order){
-            $book = \App\Model\Book::where('bookcode', $order->book_id)
+            $book = \App\Model\Book::where('id', $order->book_id)
                                     ->first();
+            
             $subarray = array();
             array_push($subarray, $order, $book);
             array_push($array, $subarray);
@@ -173,7 +174,7 @@ class OrderController extends Controller
                                 ->get();
         $array = array();
         foreach($orders as $order){
-            $book = \App\Model\Book::where('bookcode', $order->book_id)
+            $book = \App\Model\Book::where('id', $order->book_id)
                 ->first();
             $subarray = array();
             array_push($subarray, $order, $book);
