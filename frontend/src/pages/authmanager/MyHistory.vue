@@ -13,10 +13,11 @@
                   <thead>
                     <tr>
                       <!-- <th class="numeric"> BookId </th> -->
+                      <th class="numeric"> BookCode </th>
                       <th class="numeric"> BookName </th>
                       <!-- <th class="numeric"> CategoryName </th> -->
                       <!-- <th class="numeric"> Description </th> -->
-                      <th class="numeric"> BookCode </th>
+                      
                       <th class="numeric"> ISBN </th>
                       <th class="numeric"> BookAuthor </th>
                       <th class="numeric"> BookLocation </th>
@@ -29,10 +30,11 @@
                   <tbody>
                     <tr v-for="(info,index) in books" :key="index">
                       <!-- <td> {{info[0].book_id}} </td> -->
+                      <td> {{info[1].bookcode}} </td>
                       <td> {{info[1].bookname}} </td>
                       <!-- <td> {{info[1].name}}</td> -->
                       <!-- <td> {{info[1].description}} </td> -->
-                      <td> {{info[1].bookcode}} </td>
+                      
                       <td> {{info[1].ISBN}} </td>
                       <td> {{info[1].bookauthor}} </td>
                       <td> {{info[1].booklocation}}</td>
