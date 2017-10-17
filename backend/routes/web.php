@@ -44,6 +44,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post("/api/order/renewmyBook", 'OrderController@RenewMyBook');
     Route::get("/api/order/myhistorybook", 'OrderController@GetMyHistoryBook');
 });
+
+
+Route::post("/api/upload", 'UploadController@uploadImage');
+
 Route::group(['middleware' => ['admin']], function () {
     // 书籍管理  
     Route::post("/api/category/create" , 'CategoryManageController@createCategory');

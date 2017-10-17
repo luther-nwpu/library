@@ -51,7 +51,7 @@ class OrderController extends Controller
             return response()->json(['create' => false], 200);
         } else {
         // 新建模型对象
-            $order = new \App\order() ;
+            $order = new \App\Model\order() ;
             $order->user_id = session('id');
             $order->book_id = $request->book_id;
             $order->return_time = date('Y-m-d H:i:s',strtotime('+1 month'));

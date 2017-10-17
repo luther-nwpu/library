@@ -17,7 +17,6 @@ export default {
             user_id: ''
         }
     }
-
 }    
 </script>
 <style>

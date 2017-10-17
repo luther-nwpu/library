@@ -3,7 +3,7 @@
 <div class="login-box">
   <div class="login-logo">
     <!-- <a href="../../index2.html"> -->
-    <b>Admin</b>LTE
+    <b>Library</b>System
     <!-- </a> -->
   </div>
   <!-- /.login-logo -->

@@ -26,6 +26,11 @@ class BookManageController extends Controller
         $book->booklocation = $request->booklocation;
         $book->bookauthor = $request->bookauthor;
         $book->save();
+        if($request->imageid != 0) {
+            $bookImage = new \App\Model\BookImage();
+            $bookImage->image_id = $request->imageid;
+            $bookImage->book_id = $book_id;
+        }
         return response()->json(['create' => true, 'book' => $book], 200);
     }
     // 查询
