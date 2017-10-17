@@ -11,8 +11,10 @@ class UploadController extends Controller
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
             $photo = $request->file('photo');
             $extension = $photo->extension();
+            $name = $photo->getClientOriginalName();
             $store_result = $photo->store('photo');
             $output = [
+                'name' => $name,
                 'extension' => $extension,
                 'store_result' => $store_result
             ];
