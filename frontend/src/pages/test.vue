@@ -1,7 +1,6 @@
 <template>
     <div>
     <Upload action="/api/upload"
-     ref="photo"
      name="photo"
     enctype="multipart/form-data"
     :on-success="handleSuccess"

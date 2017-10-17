@@ -22,4 +22,7 @@ class UploadController extends Controller
         }
         exit('未获取到上传文件或上传过程出错');
     }
+    public function getImage(Request $request) {
+        
+    }
 }
