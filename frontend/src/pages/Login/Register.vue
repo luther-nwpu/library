@@ -6,7 +6,6 @@
             </div>
             <div class="register-box-body">
                 <p class="login-box-msg">Register a new account</p>
-
                 <form>
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" placeholder="Full name" v-model = "name">
@@ -21,30 +20,30 @@
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="Retype password" v-model = "repassword">
+                        <input type="password" class="form-control" placeholder="Retype password" v-model = "repassword">
                         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                     </div>
-                </form>
-                <div class="demo-upload-list"     
-                    <img :src="img" width="10%"/>
-                </div>
-                <Upload
-                    name = "photo"
-                    enctype="multipart/form-data"
-                    :with-credentials="true"
-                    :show-upload-list="false"
-                    :on-success="handleSuccess"
-                    :format="['jpg','jpeg','png']"
-                    :max-size="2048"
-                    :on-format-error="handleFormatError"
-                    :on-exceeded-size="handleMaxSize"
-                    type="drag"
-                    action="/api/upload"
-                    style="display: inline-block;width:58px;">
-                    <div style="width: 58px;height:58px;line-height: 58px;">
-                        <Icon type="camera" size="20"></Icon>
+                    <div class="demo-upload-list">     
+                        <img :src="img" width="10%"/>
                     </div>
-                </Upload>
+                    <Upload
+                        name = "photo"
+                        enctype="multipart/form-data"
+                        :with-credentials="true"
+                        :show-upload-list="false"
+                        :on-success="handleSuccess"
+                        :format="['jpg','jpeg','png']"
+                        :max-size="2048"
+                        :on-format-error="handleFormatError"
+                        :on-exceeded-size="handleMaxSize"
+                        type="drag"
+                        action="/api/upload"
+                        style="display: inline-block;width:58px;">
+                        <div style="width: 58px;height:58px;line-height: 58px;">
+                            <Icon type="camera" size="20"></Icon>
+                        </div>
+                    </Upload>
+                </form>
                 <button type="button" class="btn btn-primary btn-lg btn-block" @click = "register()">Register</button>
                 <div style="margin-top:10px">
                     <a href="#/login/authlogin" class="text-center">I already have a account</a>
@@ -56,13 +55,17 @@
 <script>
 import axios from 'axios'
 export default {
+    async created () {
+        this.img = `/api/getImage?ImageId=` + this.ImageId
+    },
     data(){
         return {
             name: '',
             email: '',
             password: '',
             repassword: '',
-            img: ""
+            img: '',
+            ImageId: 1
         }
     },
     methods: {
@@ -72,7 +75,8 @@ export default {
                     var res = await axios.post('/api/auth/register', {
                         name: this.name,
                         email: this.email,
-                        password: this.password
+                        password: this.passwords,
+                        imageid: this.ImageId
                     })
                     console.log(res);
                     if(res.data.registed == false){
@@ -92,6 +96,7 @@ export default {
         async handleSuccess (res, file) {
             // 因为上传过程为实例，这里模拟添加 url
             console.log(res)
+            this.ImageId = res.output.ImageId
             console.log(`/api/getImage?ImageId=` + res.output.ImageId)
             this.img = `/api/getImage?ImageId=` + res.output.ImageId
         },

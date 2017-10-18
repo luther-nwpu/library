@@ -16,11 +16,7 @@ class CreateBookimageTable extends Migration
         Schema::create('bookimage', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('book_id')->unsigned();
-            $table->foreign('book_id')
-                  ->references('id')->on('books');
-            $table->integer('image_id')->unsigned();           
-            $table->foreign('image_id')
-                  ->references('id')->on('image');
+            $table->integer('image_id')->unsigned();
             $table->timestamps();
         });
     }

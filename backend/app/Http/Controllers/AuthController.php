@@ -18,6 +18,7 @@ class AuthController extends Controller
             $request->session()->put('email', 'admin');
             $request->session()->put('id', 0);
             $request->session()->put('role', 2);
+            $request->session()->put('imageid', 1);
             return response()->json(['logined' => true], 200);
         } else {
             $User = \App\User::where('email', $request->email)
@@ -45,7 +46,7 @@ class AuthController extends Controller
             return response()->json(['registed' => true, 'error'=> "对不起，不能是admin"], 200);
         }
         $existUser = \App\User::where('email', $request->email)
-                    ->first();
+                              ->first();
         if($existUser) {
             return response()->json(['registed' => true], 200);
         } else {
@@ -55,6 +56,7 @@ class AuthController extends Controller
             $User->updated_at = date('Y-m-d H:i:s');
             $User->password = $request->password;
             $User->email = $request->email;
+            $User->ImageId = $request->imageid;
             $User->save();
             return response()->json(['registed' => false, 'User'=> $User], 200);
         }

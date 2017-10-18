@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class adminmiddleware
+class managermiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class adminmiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(session('role') == 2){
+        if(session('role') == 1){
             return $next($request);
         } else {
             // 返回1  为当前用户是用户，但不是管理员

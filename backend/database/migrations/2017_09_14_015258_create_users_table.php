@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');       //'name'列唯一
             $table->string('password');             //'password'
             $table->string('email');      //'email'唯一
+            $table->integer('imageid')->unsigned();
             $table->timestamps();                   //自动生成时间戳记录创建更新时间
         });
     }
