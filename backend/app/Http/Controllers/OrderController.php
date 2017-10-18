@@ -99,7 +99,7 @@ class OrderController extends Controller
     // 所有人都可以借， request 存的是当前用户id与书的id book_id    uset_id
     public function RenewBook(Request $request){
         $book = \App\Model\Order::where('book_id', $request->book_id)
-                                ::where('user_id', $request->user_id)
+                                ->where('user_id', $request->user_id)
                                 ->where('type_id', 0)
                                 ->first();
         $user = \App\User::find($request->user_id);

@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 Route::post("/api/upload", 'UploadController@uploadImage');
+Route::get("/api/getImage", 'UploadController@getImage');
+Route::get("/api/ISBNInfo", 'ISBNController@getISBNInfo');
 
 Route::group(['middleware' => ['admin']], function () {
     // 书籍管理  
