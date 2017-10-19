@@ -56,18 +56,12 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
     Route::get("/api/category/getall" , 'CategoryManageController@getAllCategory');
 
-    Route::post("/api/admin/create" , 'LibraryManagerController@createLibraryManager');
-    Route::post("/api/admin/delete" , 'LibraryManagerController@deleteLibraryManager');
-    Route::get("/api/admin/getall",  'LibraryManagerController@getAllLibraryManager');
 });
 
-Route::post("/api/admin/getuser", 'LibraryManagerController@getUser');
 
 
 Route::post("/api/upload", 'UploadController@uploadImage');
 Route::get("/api/getImage", 'UploadController@getImage');
-
-
 
 // 目录管理
 Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
@@ -77,6 +71,12 @@ Route::post("/api/book/findbook" , 'BookManageController@findBook');
 
 
 Route::group(['middleware' => ['admin']], function () {
+	
+    Route::post("/api/admin/createmanager" , 'LibraryManagerController@createLibraryManager');
+    Route::post("/api/admin/deletemanager" , 'LibraryManagerController@deleteLibraryManager');
+    Route::get("/api/admin/getallmanager",  'LibraryManagerController@getAllLibraryManager');
+	Route::post("/api/admin/getuserbyemail", 'LibraryManagerController@getUser');
+	
     // 书籍管理      
     Route::get('/api/auth/getAllUser', 'AuthController@getAllUser');
     Route::post('/api/auth/deleteUser', 'AuthController@deleteUser');

@@ -8,23 +8,27 @@
         <div class = "row">
             <span class = "col-md-3"><h2> email:</h2> </span> 
             <span class = "col-md-3"><input type = "text" class = "form-control" v-model = "email"/></span>
-            <span class = "col-md-2"> <button @click = "search()"> Search</button> </span>
+            <span class = "col-md-2"><button @click = "search()"> Search</button> </span>
         </div>
         <table class="table table-striped table-bordered" id="mytable">
             <thead>
             <tr>
-                <th class="numeric"> UserId </th>
-                <th class="numeric"> UserName </th>
                 <th class="numeric"> UserEmail </th>
+                <th class="numeric"> UserName </th>
+                <th class="numeric"> UserNumber </th>
+                <th class="numeric"> UserUniversity </th>
+                <th class="numeric"> UserCollege </th>
                 <th class="numeric"> CreatedTime </th>
                 <th class="numeric"> Operation </th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(info,index) in research" :key="index">
-                <td> <h2>{{info.user.id}}</h2> </td>
-                <td> <h2> {{info.user.name}}</h2> </td>
-                <td> <h2>{{info.user.email}} </h2></td>
+                <td> <h2> {{info.user.email}}</h2></td>
+                <td> <h2> {{info.user.username}}</h2> </td>
+                <td> <h2>{{info.user.usernumber}} </h2></td>
+                <td> <h2>{{info.user.useruniversity}} </h2></td>
+                <td> <h2>{{info.user.usercollege}} </h2></td>
                 <td> <h2>{{info.user.created_at}}</h2> </td>
                 <td>
                 <button class ="btn btn-primary" @click = "addManager(info.user.id)">AddManager</button>
@@ -42,18 +46,23 @@
         <table class="table table-striped table-bordered" id="mytable">
             <thead>
             <tr>
-                <th class="numeric"> UserId </th>
-                <th class="numeric"> UserName </th>
+               
                 <th class="numeric"> UserEmail </th>
+                <th class="numeric"> UserName </th>
+                <th class="numeric"> UserNumber </th>
+                <th class="numeric"> UserUniversity </th>
+                <th class="numeric"> UserCollege </th>
                 <th class="numeric"> CreatedTime </th>
                 <th class="numeric"> Operation </th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(info,index) in libraryManagers" :key="index">
-                <td> <h2>{{info[1].id}}</h2> </td>
-                <td> <h2> {{info[1].name}}</h2> </td>
-                <td> <h2>{{info[1].email}} </h2></td>
+                <td> <h2>{{info[1].email}}</h2></td>
+                <td> <h2>{{info[1].username}}</h2> </td>
+                <td> <h2>{{info[1].usernumber}} </h2></td>
+                <td> <h2>{{info[1].useruniversity}} </h2></td>
+                <td> <h2>{{info[1].usercollege}} </h2></td>
                 <td> <h2>{{info[0].created_at}}</h2> </td>
                 <td>
                 <button class ="btn btn-primary" @click = "deleteManager(info[0].id, index)"> DELETE</button>
@@ -76,7 +85,7 @@ export default {
         }
     },
     async created(){
-        var res = await axios.get('/api/admin/getall')
+        var res = await axios.get('/api/admin/getallmanager')
         console.log(res);
         this.libraryManagers = res.data.libraryManager;
     },
@@ -87,7 +96,7 @@ export default {
                 alert('Please Input Email');
             } else {
                 console.log(this.email);
-                var res = await axios.post('/api/admin/getuser', {
+                var res = await axios.post('/api/admin/getuserbyemail', {
                     email: this.email
                 })
                 console.log('当前用户' + res)
@@ -103,22 +112,24 @@ export default {
         },
         async addManager(id) {
             console.log(id);
-            var res = await axios.post('/api/admin/create', {
+            var res = await axios.post('/api/admin/createmanager', {
                 user_id: id
             })
             if(!res.data.created){
-                alert('THIS USER ALREADY EXIST, PLEASE ADD OTHER USER');
+                alert('the library already exist');
             } else {
+                alert('add success')
                 this.libraryManagers.push(res.data.manager);
-                this.$Message.info('ADD SUCCESS');
+                this.$Message.info('add success');
                 this.research = []
             }
             console.log(res)
         },
         async deleteManager(id, index) {
-            var res = await axios.post('/api/admin/delete', {
+            var res = await axios.post('/api/admin/deletemanager', {
                 id: id
             })
+            alert('delete success')
             this.libraryManagers.splice(index, 1);
             console.log(res)
         }

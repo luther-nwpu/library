@@ -165,19 +165,22 @@ class AuthController extends Controller
                         ->where('usercode', $request->currentusercode)
                         ->first();
         if($user){
-            if($request->usercode != $request->repeateusercode) {
+            if($request->usercode != $request->repeatusercode) {
                 return response()->json(['reset' => false], 200);
             } else {
                 $twouser = \App\User::where('id', $id)
-                            ->where('usercode', '!=', $request->currentusercode)
-                            ->where('usercode',  $request->usercode)
+                            ->where('usercode', $request->usercode)
                             ->first();
                 if($twouser) {
-                    return response()->json(['reset' => true], 200);
+					if($user->id == $twouser->id){
+						return response()->json(['reset' => true], 200);
+					} else {
+						return response()->json(['reset' => false], 200);
+					}
                 } else {
                     $user->usercode = $request->usercode;
-                    $user->save();
-                    return response()->json(['reset' => true], 200);
+					$user->save();
+					return response()->json(['reset' => true], 200);
                 }
             }
         } else {
@@ -221,6 +224,13 @@ class AuthController extends Controller
             foreach($orderbooks as $orderbook){
                 if($orderbook->user_id == $user->id){
                     $orderbook->delete();
+                }
+            }
+			$librarymanagers = \App\Model\LibraryManager::where('user_id', $user->id)
+                                    ->get();
+            foreach($librarymanagers as $librarymanager){
+                if($librarymanager->user_id == $user->id){
+                    $librarymanager->delete();
                 }
             }
             $user->delete();

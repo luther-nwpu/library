@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');              // 主键自增
             $table->string('password');            // 'password'
             $table->string('email');               // 'email'唯一
-            $table->string('usercode')->unique();  // 一卡通的hash值
+            $table->string('usercode');  // 一卡通的hash值
             $table->string('usernumber');          // 学号
             $table->string('username');            // 姓名
             $table->integer('imageid');

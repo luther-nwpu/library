@@ -1,12 +1,42 @@
 <template>
     <div>
-        usernumber: <input v-model = "usernumber"/>
-        username: <input class= "form-control" v-model = "username"/>
-        userinfo: <input class= "form-control" v-model = "userinfo"/>
-        useruniveristy: <input class= "form-control" v-model = "useruniversity"/>
-        usercollege: <input class= "form-control" v-model = "usercollege"/>
-        <button @click="commitdata()">tioajiao</button>
-        {{usernumber}}
+        <h3> My Information</h3>
+        </br>
+        <div class = "row">
+        <span class = "col-md-3"><h4>usernumber:</h4></span>
+        <span class = "col-md-4">
+            <input type = "text" class = "form-control" v-model = "usernumber"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-3"><h4>username:</h4></span>
+        <span class = "col-md-4">
+        <input type = "text" class = "form-control" v-model = "username"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-3"><h4>userinfo: </h4></span>
+        <span class = "col-md-4">
+        <input type = "text" class = "form-control" v-model = "userinfo"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-3"><h4>useruniversity:</h4> </span>
+        <span class = "col-md-4">
+        <input type = "text" class = "form-control" v-model = "useruniversity"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-3"><h4> usercollege: </h4></span>
+        <span class = "col-md-4">
+        <input type = "text" class = "form-control" v-model = "usercollege"/>
+        </span>
+    </div>
+    <button class="primary" @click="commitdata()">Commit Data</button>
     </div>
 </template>
 <script>
