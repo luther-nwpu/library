@@ -16,6 +16,23 @@ import 'iview/dist/styles/iview.css';
 
 Vue.config.productionTip = false
 Vue.use(iView);
+
+Vue.directive('focusNextOnEnter', {
+  bind: function(el, {
+    value
+  }, vnode) {
+    el.addEventListener('keyup', (ev) => {
+      if (ev.keyCode === 13) {
+        let nextInput = vnode.context.$refs[value]
+        if (nextInput && typeof nextInput.focus === 'function') {
+          nextInput.focus()
+          nextInput.select()
+        }
+      }
+    })
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

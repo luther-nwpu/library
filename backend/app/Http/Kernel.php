@@ -45,8 +45,10 @@ class Kernel extends HttpKernel
             'myauth'
         ],
         'admin' => [
-            'myauth',
             'myadmin'
+        ],
+        'manager' => [
+            'mymanager'
         ]
     ];
 
@@ -65,5 +67,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'myadmin' => \App\Http\Middleware\adminmiddleware::class,
+        'mymanager' => \App\Http\Middleware\managermiddleware::class,
     ];
 }

@@ -46,12 +46,12 @@
                                 <img :src="logo" class="img-circle" alt="User Image">
                             </li>
                             <li class="user-body">
-                               Email: {{user.email}}
+                               Email: {{user.email}} University: {{user.useruniversity}}
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#/common/allbook" class="btn btn-default btn-flat">Profile</a>
+                                <a href="#/profile/myinfo" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right" @click = "Signout()">
                                 <a href="#/index" class="btn btn-default btn-flat">Sign Out</a>

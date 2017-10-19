@@ -43,27 +43,42 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post("/api/order/borrowmybook", 'OrderController@BorrowMyBook');
     Route::post("/api/order/renewmyBook", 'OrderController@RenewMyBook');
     Route::get("/api/order/myhistorybook", 'OrderController@GetMyHistoryBook');
+    Route::get("/api/auth/myuserinfo", 'AuthController@MyUserInfo');
+    Route::post('/api/auth/updateuserinfo', 'AuthController@updateUserInfo');
+    Route::post('/api/auth/resetMyPassword', 'AuthController@resetMyPassword');
+    Route::post('/api/auth/resetMyImage', 'AuthController@resetMyImage');
+    Route::post('/api/auth/resetMyUserCode', 'AuthController@resetMyUserCode'); 
 });
 
 
-Route::post("/api/upload", 'UploadController@uploadImage');
-Route::get("/api/getImage", 'UploadController@getImage');
-Route::get("/api/ISBNInfo", 'ISBNController@getISBNInfo');
-
 Route::group(['middleware' => ['admin']], function () {
-    // 书籍管理  
     Route::post("/api/category/create" , 'CategoryManageController@createCategory');
     Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
     Route::get("/api/category/getall" , 'CategoryManageController@getAllCategory');
-    // 目录管理
-    Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
-    Route::post("/api/book/update" , 'BookManageController@updateBook');
-    Route::post("/api/book/create" , 'BookManageController@storeBook');
-    Route::post("/api/book/findbook" , 'BookManageController@findBook');
 
     Route::post("/api/admin/create" , 'LibraryManagerController@createLibraryManager');
     Route::post("/api/admin/delete" , 'LibraryManagerController@deleteLibraryManager');
     Route::get("/api/admin/getall",  'LibraryManagerController@getAllLibraryManager');
-    Route::post("/api/admin/getuser", 'LibraryManagerController@getUser');
-    
+});
+
+Route::post("/api/admin/getuser", 'LibraryManagerController@getUser');
+
+
+Route::post("/api/upload", 'UploadController@uploadImage');
+Route::get("/api/getImage", 'UploadController@getImage');
+
+
+
+// 目录管理
+Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
+Route::post("/api/book/update" , 'BookManageController@updateBook');
+Route::post("/api/book/create" , 'BookManageController@storeBook');
+Route::post("/api/book/findbook" , 'BookManageController@findBook');
+
+
+Route::group(['middleware' => ['admin']], function () {
+    // 书籍管理      
+    Route::get('/api/auth/getAllUser', 'AuthController@getAllUser');
+    Route::post('/api/auth/deleteUser', 'AuthController@deleteUser');
+    Route::post('/api/auth/resetPassword', 'AuthController@resetPassword');
 });

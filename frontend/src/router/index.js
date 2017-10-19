@@ -10,6 +10,7 @@ import 'font-awesome/css/font-awesome.min.css'
 import fullLayout from './fullLayout'
 import noneLayout from './noneLayout'
 import topLayoutBarLayout from './topLayoutBarLayout'
+import profileLayout from './profileLayout'
 
 Vue.use(Router)
 
@@ -22,6 +23,7 @@ export default new Router({
     topLayoutBarLayout,
     fullLayout,
     noneLayout,
+    profileLayout,
     {
       path: '/*',
       component: resolve => require(['@/pages/404.vue'], resolve)

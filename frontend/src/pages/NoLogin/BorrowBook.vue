@@ -5,7 +5,8 @@
         Email: <input type = "text" v-model = "email"/>
         <button @click = "GetUserInfo()">Search</button>
     </div>
-
+    <div v-for="mybook in mybooks">
+    </div>
     <div class="col-md-6">
         书籍id: <input type = "text" v-model = "book_id"/>
         <button @click = "GetBookInfo()">Search</button>
@@ -18,7 +19,8 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            email: '',
+            usercode: '',
+            mybooks: [],
             book_id: ''
         }
     },

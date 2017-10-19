@@ -150,7 +150,7 @@ class OrderController extends Controller
             return response()->json(['get' => false], 200);
         }
         $orders = \App\Model\Order::where('user_id', $request->user_id)
-                                ->where('type_id', 0||1)
+                                ->where('type_id', '<', 2)
                                 ->get();
         $array = array();
         foreach($orders as $order){
@@ -166,7 +166,8 @@ class OrderController extends Controller
     // 我的所有历史读书
     public function GetMyHistoryBook(){
         $user_id = session('id');
-        $user = \App\User::find($user_id);
+        $user = \App\User::where('id', $user_id)
+                            ->first();
         if(!$user){
             return response()->json(['get' => false], 200);
         }
@@ -175,11 +176,16 @@ class OrderController extends Controller
         $array = array();
         foreach($orders as $order){
             $book = \App\Model\Book::where('id', $order->book_id)
-                ->first();
+                                      ->first();
             $subarray = array();
             array_push($subarray, $order, $book);
             array_push($array, $subarray);
         }
         return $array;
     }
+
+    public function GetHistoryBookById(){
+
+    }
+
 }

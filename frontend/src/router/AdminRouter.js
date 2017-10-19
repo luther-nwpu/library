@@ -5,6 +5,10 @@ export default {
       {
         path: 'manager',
         component: resolve => require(['@/pages/admin/LibraryManager.vue'], resolve)
+      },
+      {
+        path: 'alluser',
+        component: resolve => require(['@/pages/admin/AllUser.vue'], resolve)
       }
     ]
   }
