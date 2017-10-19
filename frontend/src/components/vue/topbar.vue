@@ -38,7 +38,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" style ="height: 50px">
                                 <!-- The user image in the navbar-->
                                 <span v-if="user.imageid == 0">
-                                    <img :src="logo" class="img-circle" alt="User Image">
+                                    <img :src="logo"  alt="User Image">
                                 </span>
                                 <span v-else>
                                     <img :src="ImageUrl" width="30px" height ="30px" class="img-circle" alt="User Image">
@@ -105,22 +105,12 @@
                         <li class="dropdown user user-menu" style ="width: 250px">
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" style ="height: 50px">
-                                           <div v-if="user.imageid == 0">
-                            <img :src="logo" class="img-circle" alt="User Image">
-                            </div>
-                            <div v-else>
-                            <img :src="ImageUrl" width="60px" height ="60px" class="img-circle" alt="User Image">
-                            </div>
-                                <span class="hidden-xs">{{user.name}}</span>
+                                <img :src="logo" class="img-circle" width = "30px" height="30px" alt="User Image">
+                            <span class="hidden-xs">{{user.name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="user-header">
-                                        <div v-if="user.imageid == 0">
-                                            <img :src="logo" class="img-circle" alt="User Image">
-                                            </div>
-                                            <div v-else>
-                                            <img :src="ImageUrl" width="60px" height ="60px" class="img-circle" alt="User Image">
-                                            </div>
+                                    <img :src="logo" class="img-circle" alt="User Image">
                                 </li>
                                 <li class="user-body">
                                     Email: {{user.email}} University: {{user.useruniversity}}
