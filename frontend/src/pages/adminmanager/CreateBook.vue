@@ -1,19 +1,108 @@
 <template>
     <div>
-        ISBN: <input v-model="ISBN" @keyup.enter = "searchbook()"/>
-        title: <input v-model="title"/>
-        image:<input v-model="image"/>
-        author: <input v-model="author"/>         
-        translator: <input v-model="translator"/>
-        publisher: <input v-model="publisher"/>
-        pudate: <input v-model="pudate"/>
-        authorintro:<input v-model="authorintro"/>
-        summary: <input v-model="summary"/>
-        catalog: <input v-model="catalog"/>
-        price: <input v-model="price"/>
-        pages: <input v-model="pages"/>
-        booknum: <input v-model="booknum"/>
-        <button @click = "createBook()">Create Book</button>
+    <br>
+    <h3> Add Book (Remarks: You Can Input The ISBN Enter Quickly Fill The Info) </h3>
+    <br>
+    <div class = "row">
+        <span class = "col-md-2"><h1> ISBN:</h1></span>
+        <span class = "col-md-2">
+            <input type = "text" class = "form-control" v-model = "ISBN" @keyup.enter = "searchbook()"/>
+        </span>
+        <span class = "col-md-1">Category:</span>
+        <span class = "col-md-2"> <input type = "text" class = "form-control" v-model = "category" @keyup.enter = "searchbook()"/></span>
+
+        <span class = "col-md-1"></span>
+        <span class = "col-md-1">
+            <h1>Image:</h1>
+        </span>
+        <span class = "col-md-1">
+            <div class="demo-upload-list"> 
+                <img :src="image" width="10%"/>
+            </div>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-2"><h1> title:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = "title"/>
+        </span>
+        <span class = "col-md-1"></span>
+        <span class = "col-md-2"><h1> author:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = "author"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-2"><h1> translator:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = " translator"/>
+        </span>
+        <span class = "col-md-1"></span>
+        <span class = "col-md-2"><h1> publisher:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = "publisher"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-2"><h1> price:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = "price"/>
+        </span>
+        <span class = "col-md-1"></span>
+        <span class = "col-md-2"><h1> pages:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = "pages"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-2"><h1> pudate:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = "pudate"/>
+        </span>
+        <span class = "col-md-1"></span>
+        <span class = "col-md-2"><h1>summary:</h1></span>
+        <span class = "col-md-3">
+             <Input v-model="summary" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="请输入..."></Input>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-2"><h1> catalog:</h1></span>
+        <span class = "col-md-3">
+           <Input v-model="catalog" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="请输入..."></Input>
+        </span>
+        <span class = "col-md-1"></span>
+        <span class = "col-md-2"><h1>authorintro:</h1></span>
+        <span class = "col-md-3">
+             <Input v-model="authorintro" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="请输入..."></Input>
+        </span>
+    </div>
+    <br>
+    <br>
+    <div class = "row">
+        <span class = "col-md-2"><h1> location:</h1></span>
+        <span class = "col-md-3">
+            <input type = "text" class = "form-control" v-model = "location"/>
+        </span>
+        <span class = "col-md-1"></span>
+        <span class = "col-md-2"><h1> booknum:</h1></span>
+        <span class = "col-md-3">
+            <input type = "number" class = "form-control" v-model = "booknum"/>
+        </span>
+    </div>
+    <br>
+    <div class = "row">
+        <span class = "col-md-3">
+            <button class = "btn btn-primary" @click = "createBook()"> Create Book </button>
+        </span>
+        <span class = "col-md-3">
+            <button class = "btn btn-primary"  @click = "ReturnLast()"> Cancel </button>
+        </span>
+    </div>  
     </div> 
 </template>
 <script>
@@ -33,7 +122,7 @@ export default {
             catalog: '',
             price: '',
             pages: '',
-            category_id: 0,
+            category: '',
             location: '',
             booknum: 1
         }
@@ -66,27 +155,78 @@ export default {
             })
         },
         async createBook(){
-            console.log('zhanglu')
-            var res = await axios.post('/api/book/createbook', {
-                category_id: this.category_id,
-                isbn: this.ISBN,
-                title: this.title,
-                image: this.image,
-                author: this.author,
-                translator: this.translator,
-                publisher: this.publisher,
-                pudate: this.pubdate,
-                authorintro: this.authorintro,
-                summary: this.summary,
-                catalog: this.catalog,
-                price: this.price,
-                pages: this.pages,
-                location: this.location,
-                booknum: this.booknum
-            })
-            console.log(res)
-            console.log('zhang22')
+            if(this.ISBN&&this.category&&this.author&&this.title){
+                console.log('zhanglu')
+                var res = await axios.post('/api/book/createbook', {
+                    category: this.category,
+                    isbn: this.ISBN,
+                    title: this.title,
+                    image: this.image,
+                    author: this.author,
+                    translator: this.translator,
+                    publisher: this.publisher,
+                    pudate: this.pubdate,
+                    authorintro: this.authorintro,
+                    summary: this.summary,
+                    catalog: this.catalog,
+                    price: this.price,
+                    pages: this.pages,
+                    location: this.location,
+                    booknum: this.booknum
+                }) 
+                console.log(res)
+                if(res.data.create) {
+                    alert('Create Success')
+                } else {
+                    alert('Create False')
+                }
+            } else {
+                alert('Please Input ISBN Category Title Author')
+            }
+        },
+        ReturnLast() {
+            this.$router.push({//你需要接受路由的参数再跳转
+                path: '/admin/bookstore'
+            });
         }
     }
 }    
 </script>
+<style scoped>
+    .demo-upload-list{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        overflow: hidden;
+        background: #fff;
+        position: relative;
+        box-shadow: 0 1px 1px rgba(0,0,0,.2);
+        margin-right: 4px;
+    }
+    .demo-upload-list img{
+        width: 100%;
+        height: 100%;
+    }
+    .demo-upload-list-cover{
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,.6);
+    }
+    .demo-upload-list:hover .demo-upload-list-cover{
+        display: block;
+    }
+    .demo-upload-list-cover i{
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        margin: 0 2px;
+    }
+</style>

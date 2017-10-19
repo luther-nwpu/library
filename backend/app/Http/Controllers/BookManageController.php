@@ -6,6 +6,24 @@ use Illuminate\Http\Request;
 
 class BookManageController extends Controller
 {
+	public function findAllBookByISBN(Request $request) {
+		$books = \App\Model\Book::where('isbn', $request->isbn)
+								->get();
+		if($books){
+			$array = array();
+			foreach($books as $book) {
+				$twoarray = array();
+				$order = \App\Model\Order::where('book_id', $book->id)
+										->where('type_id', '<', 2)
+										->first();
+				array_push($twoarray, $book, $order);
+				array_push($array, $twoarray);
+			}
+			return response()->json(['find' => true, 'book' => $array], 200);
+		} else {
+			return response()->json(['find' => false], 200);
+		}
+	}
     public function storeBook(Request $request){
         for ($i=0; $i<$request->booknum; $i++) {
             $book = new \App\Model\Book();
@@ -13,16 +31,19 @@ class BookManageController extends Controller
             if($request->category){
                 $book->category = $request->category;
             } else {
+				return response()->json(['create' => false], 200);
                 $book->category = '';
             }
             if($request->isbn) {
                 $book->isbn = $request->isbn;
             } else {
+				return response()->json(['create' => false], 200);
                 $book->isbn = '';
             }
-            if($book->title) {
+            if($request->title) {
                 $book->title = $request->title;
             } else {
+				return response()->json(['create' => false], 200);
                 $book->title = '';
             }
             if($request->image) {
@@ -93,15 +114,44 @@ class BookManageController extends Controller
             ->first();
         return $book;
     }
+	public function findBookByISBN(Request $request){
+		$books = \App\Model\Book::where('isbn', $request->isbn)
+								->get();
+		if($books) {
+			$array = array();
+			foreach($books as $book) {
+				$twoarray = array();
+				$order = \App\Model\Order::where('book_id', $book->id)
+										 ->where('type_id', '<', 2)
+										 ->first();
+				array_push($twoarray, $book, $order);
+				array_push($array, $twoarray);
+			}
+			return response()->json(['get' => false, 'book' => $array], 200);
+		} else {
+			return response()->json(['get' => false, 'err' => "this isbn not exist"], 200);
+		}
+		return $books;
+	}
     // 删除
-    public function deleteBook(Request $request){
-        $info = \App\Model\Book::find($request->id) ;
-        $res = $info->delete() ;
-        if($res){
-            return response()->json(['delete' => true], 200);
-        } else {
-            return response()->json(['delete' => false], 200);
-        }
+    public function deleteBookById(Request $request){
+        $info = \App\Model\Book::where('id', $request->id)
+								->first();
+		if($info){
+			$orders = \App\Model\Order::where('book_id', $request->id)
+										->get();
+			foreach($orders as $order){
+				$order->delete();
+			}
+			$res = $info->delete();
+			if($res){
+				return response()->json(['delete' => true], 200);
+			} else {
+				return response()->json(['delete' => false], 200);
+			}
+		} else {
+			return response()->json(['delete' => true], 200);
+		}
     }
     // 更新
     public function updateBook(Request $request){
@@ -131,4 +181,18 @@ class BookManageController extends Controller
 				->groupBy('isbn');
 		return $books;
     }
+	public function deleteBookByISBN(Request $request) {
+		$books = \App\Model\Book::where('isbn', $request->isbn)
+								->get();
+		foreach($books as $book) {
+			$orders = \App\Model\Order::where('book_id', $book->id)
+									  ->first();
+			foreach($orders as $order) {
+				$order->delete();
+			}
+			$book->delete();
+		}
+		response()->json(['delete' => true], 200);
+	}
+	
 }

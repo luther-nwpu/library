@@ -16,10 +16,10 @@ export default {
       },
       {
         name: 'editBook',
-        path: 'editBook/:id',
+        path: 'editBook/:isbn',
         component: resolve => require(['@/pages/adminmanager/EditBook.vue'], resolve)  
       },
-       {
+      {
         path: 'borrowbook',
         component: resolve => require(['@/pages/adminmanager/borrowbook.vue'], resolve)
       },

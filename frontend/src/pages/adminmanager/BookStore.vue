@@ -5,55 +5,28 @@
           <a href = "#/admin/createBook" class = "btn btn-primary" style = "margin-top: 12px"> <h1>addBook</h1> </a>
         </span>
       </div>
-      <div class="row" style = "margin-top: 20px">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h2>AllBook</h2>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row" style ="margin-left: 5px; margin-right: 5px">              
-                <table class="table table-striped table-bordered" id="mytable">
-                  <thead>
-                    <tr>
-                      <!-- <th class="numeric"> BookId </th> -->
-                      <th class="numeric"> BookCode </th>
-                      <th class="numeric"> BookName </th>
-                      <th class="numeric"> CategoryName </th>
-                      <th class="numeric"> Description </th>                
-                      <th class="numeric"> ISBN </th>
-                      <th class="numeric"> BookAuthor </th>
-                      <th class="numeric"> BookLocation </th>
-                      <!-- <th class="numeric"> BookInfo </th> -->
-                      <th class="numeric"> Operation </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(info,index) in books" :key="index">
-                      <!-- <td> {{info[0].id}} </td> -->
-                      <td> {{info[0].bookcode}} </td>
-                      <td> {{info[0].bookname}} </td>
-                      <td> {{info[1].name}}</td>
-                      <td> {{info[0].description}} </td>
-                      <td> {{info[0].ISBN}} </td>
-                      <td> {{info[0].bookauthor}} </td>
-                      <td> {{info[0].booklocation}}</td>
-                      <td>
-                       <router-link :to="{ name: 'editBook', params: { id: info[0].id }}"> <button class="btn btn-xs blue"> Edit </button> </router-link>
-                        <button @click = "deleteBook(info[0].id)">delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
+      <div class="row" style ="margin-left: 5px; margin-right: 5px">              
+        <table class="table table-striped table-bordered" id="mytable">
+          <thead>
+            <tr>
+              <th class="numeric">BookTitle</th>
+              <th class="numeric"> BookAuthor </th>
+              <th class="numeric"> Category </th>
+              <th> ISBN </th>
+              <th> Operation </th>             
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(info,index) in books" :key="index">
+              <!-- <td> {{info[0].id}} </td> -->
+              <td> <router-link :to="{name: 'editBook', params: {isbn: index}}"> {{info[0].title}}</router-link></td>
+              <td> {{info[0].author}} </td>
+              <td> {{info[0].category}}</td>
+              <td> {{index}}</td>
+              <td> <button @click = "deleteBook(index)"> Delete This ISBN </button> </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 </template>
@@ -75,10 +48,13 @@ export default {
         })
     },
     methods: {
-      async deleteBook(id, index) {
-            var res = await axios.post('/api/book/del', {
-                id: id
+      async deleteBook(index) {
+            var res = await axios.post('/api/book/deletebyIsbn', {
+                isbn: index
             })
+            if(res.data.delete){
+              alert('delete true')
+            }
             this.books.splice(index, 1);
             console.log(res)
         }

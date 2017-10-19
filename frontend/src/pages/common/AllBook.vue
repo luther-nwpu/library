@@ -11,7 +11,7 @@
                 <table class="table table-striped table-bordered" id="mytable">
                   <thead>
                     <tr>
-                      <th class="numeric"> BookTitle </th>
+                      <th class="numeric">BookTitle</th>
                       <th class="numeric"> BookAuthor </th>
                       <th class="numeric"> Category </th>
                       <th> ISBN </th>               
@@ -20,7 +20,7 @@
                   <tbody>
                     <tr v-for="(info,index) in books" :key="index">
                       <!-- <td> {{info[0].id}} </td> -->
-                      <td> {{info[0].title}} </td>
+                     <td> <router-link :to="{name: 'bookinfo', params: {isbn: index}}"> {{info[0].title}}</router-link></td>
                       <td> {{info[0].author}} </td>
                       <td> {{info[0].category}}</td>
                       <td> {{index}}</td>
@@ -28,14 +28,7 @@
                   </tbody>
                 </table>
               </div>
-            </div>
-            <div v-for="(book, index) in books">
-              {{index}}
-              {{book[0]}}
-              <br>
-              <br>
-            </div>
-            
+            </div> 
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

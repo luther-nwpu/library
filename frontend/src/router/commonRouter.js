@@ -5,6 +5,11 @@ export default {
       {
         path: 'allbook',
         component: resolve => require(['@/pages/common/AllBook.vue'], resolve)
+      },
+      {
+        path: 'book/:isbn',
+        name: 'bookinfo',
+        component: resolve => require(['@/pages/common/bookinfo.vue'], resolve)
       }
     ]
   }
