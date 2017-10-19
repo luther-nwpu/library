@@ -61,5 +61,14 @@ class LibraryManagerController extends Controller
 		}
 		return response()->json(['get' => true, 'libraryManager'=>$array], 200);
 	}
-
+	
+	public function getUserByUserCode(Request $request) {
+		$user = \App\User::where('usercode', $request->usercode)
+						 ->first();
+		if($user){
+			return response()->json(['get' => true, 'user'=>$user], 200);
+		} else {
+			return response()->json(['get' => false], 200);
+		}
+	}
 }

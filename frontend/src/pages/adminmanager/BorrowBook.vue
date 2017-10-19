@@ -1,18 +1,14 @@
 <template>
 <div>
     <div class="row">
-    <div class="col-md-6 border">
-        Email: <input type = "text" v-model = "email"/>
-        <button @click = "GetUserInfo()">Search</button>
-        {{user.name}}
-    </div>
-
-    <div class="col-md-6">
-        Bookid: <input type = "text" v-model = "book_id"/>
-        <button @click = "GetBookInfo()">Search</button>
-        {{bookinfo}}
-        <button @click = "borrowBook()">Borrow Book</button>
-    </div>
+        <div class="col-md-6 border">
+            UserCode:<input v-model = "usercode" @keyup.enter = "getUserInfo()" v-focus-next-on-enter="'input2'"/>
+        </div>
+        <div class="col-md-6">
+            Bookcode: <input type = "text" v-model = "book_id" @keyup.enter = "borrowbook()" ref = "input2"/>
+        </div>
+        {{user}}
+        <button @click = "borrowBook()"> </button>
     </div>
 </div>
 </template>
@@ -21,8 +17,7 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            email: '',
-            user_id: '',
+            usercode: '',
             book_id: '',
             user: '',
             bookinfo: ''
@@ -30,8 +25,22 @@ export default {
     },
     methods: {
         async borrowBook() {
-            console.log('55555')
-            if (this.user_id && this.book_id) {
+            if(this.email) {
+                var res = await axios.post('/api/order/getuser', {
+                    email: this.email
+                });
+                console.log(res)
+                if(res.data.search == false) {
+                    alert('No This User')
+                } else {
+                    console.log(res.data.user.id)
+                    this.user_id = res.data.user.id
+                    this.user = res.data.user
+                }
+            } else {
+                alert('Please Input User')
+            }
+            if (this.book_id) {
                 var res = await axios.post('/api/order/borrowbook', {
                     user_id: this.user_id,
                     book_id: this.book_id
@@ -45,28 +54,18 @@ export default {
                 }
             }
         },
-        async GetUserInfo() {
+        async getUserInfo() {
             var res = await axios.post('/api/order/getuser', {
                 email: this.email
             });
             console.log(res)
             if(res.data.search == false) {
-                alert('并无本用户')
+                alert('No This User')
             } else {
                 console.log(res.data.user.id)
                 this.user_id = res.data.user.id
                 this.user = res.data.user
             }
-        },
-        async GetBookInfo() {
-            var res = await axios.post('/api/order/findbook', {
-                id: this.book_id
-            })
-            console.log(res)
-            if(res.data == ""){
-                alert("No book")
-            }
-            this.bookinfo = res.data
         }
     }
 

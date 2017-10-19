@@ -43,26 +43,6 @@ class OrderController extends Controller
         }
     }
 
-    // 登录后自己借书 request 
-    public function BorrowMyBook(Request $request) {
-        $book = \App\Model\Order::where('book_id', $request->book_id)
-                                ->first();
-        if($book){
-            return response()->json(['create' => false], 200);
-        } else {
-        // 新建模型对象
-            $order = new \App\Model\order() ;
-            $order->user_id = session('id');
-            $order->book_id = $request->book_id;
-            $order->return_time = date('Y-m-d H:i:s',strtotime('+1 month'));
-            $order->created_at = date('Y-m-d H:i:s');
-            $order->updated_at = date('Y-m-d H:i:s');
-            $order->type_id = 0;
-            $order->save();
-            return response()->json(['create' => true], 200);
-        }
-    }
-
     // request book_id 直接还书
     public function ReturnBook(Request $request) {
         $order = \App\Model\Order::where('book_id', $request->book_id)

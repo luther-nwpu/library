@@ -40,6 +40,7 @@ export default {
         }
     },
     async created () {
+        console.log('2222222222222')
         var res = await axios.get('/api/book/getall');
         console.log(res)
         this.books = res.data;
@@ -52,11 +53,13 @@ export default {
             var res = await axios.post('/api/book/deletebyIsbn', {
                 isbn: index
             })
-            if(res.data.delete){
-              alert('delete true')
-            }
-            this.books.splice(index, 1);
             console.log(res)
+            if(res.data.delete){
+              alert('delete true') 
+              this.books.splice(index, 1);
+            } else {
+              alert('delete false') 
+            }
         }
     }
 }
