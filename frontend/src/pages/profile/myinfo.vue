@@ -45,6 +45,13 @@ export default {
                 useruniversity: this.useruniversity
             });
             console.log(res)
+            if(res.data.update){
+                alert("Update True")
+                this.$Message.info("Update True");
+            } else {
+                alert("Update False")
+                this.$Message.info("Update False");
+            }
         }
     }
 }

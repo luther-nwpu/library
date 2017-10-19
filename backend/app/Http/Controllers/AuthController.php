@@ -19,6 +19,7 @@ class AuthController extends Controller
             $request->session()->put('usernumber', '0000000000');
             $request->session()->put('id', 0);
             $request->session()->put('role', 3);
+            $request->session()->put('imageid', 0);
             $request->session()->put('useruniversity', 'XXXX');
             $request->session()->put('usercollege', 'XXXXX');
             return response()->json(['logined' => true], 200);
@@ -35,6 +36,7 @@ class AuthController extends Controller
                 $request->session()->put('usernumber', $User->usernumber);
                 $request->session()->put('useruniversity', $User->useruniversity);
                 $request->session()->put('usercollege', $User->usercollege);
+				$request->session()->put('imageid', $User->imageid);
                 $libraryManager = \App\Model\LibraryManager::where('user_id', $User->id)
                                                         ->first();
                 if($libraryManager) {
@@ -105,11 +107,31 @@ class AuthController extends Controller
         $user = \App\User::where('id', $id)
                          ->first();
         if($user) {
-            $user->username = $request->username;
-            $user->userinfo = $request->userinfo;
-            $user->useruniversity = $request->useruniversity;
-            $user->usercollege = $request->usercollege;
-            $user->usernumber = $request->usernumber;
+			if($request->username) {
+				$user->username = $request->username;
+			} else {
+				$user->username = "";
+			}
+            if($request->userinfo) {
+				$user->userinfo = $request->userinfo;
+			} else {
+				$user->userinfo = "";
+			}
+			if($request->useruniversity) {
+				$user->useruniversity = $request->useruniversity;
+			} else {
+				$user->useruniversity = "";
+			}
+			if($request->usercollege) {
+				$user->usercollege = $request->usercollege;
+			} else {
+				$user->usercollege = "";
+			}
+			if($request->usernumber) {
+				$user->usernumber = $request->usernumber;
+			} else {
+				$user->usernumber = "";
+			}
             $user->save();
             $request->session()->put('usernumber', $user->usernumber);
             $request->session()->put('useruniversity', $user->useruniversity);
@@ -168,6 +190,7 @@ class AuthController extends Controller
                         ->first();
         if($user) {
             $user->imageid = $request->imageid;
+			$request->session()->put('imageid', $user->imageid);
             $user->save();
             return response()->json(['reset' => true], 200);
         } else {

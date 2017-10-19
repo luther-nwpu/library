@@ -1,7 +1,11 @@
 <template>
     <div>
-        <div class="demo-upload-list">     
-            <img :src="img" width="10%"/>
+        <div v-if="ImageId == 0">
+        </div>
+        <div v-else>
+            <div class="demo-upload-list">     
+                <img :src="img" width="10%"/>
+            </div>
         </div>
         <Upload
             name = "photo"
@@ -48,6 +52,7 @@ export default {
             console.log(this.ImageId)
             console.log(`/api/getImage?ImageId=` + res.output.ImageId)
             this.img = `/api/getImage?ImageId=` + res.output.ImageId
+            alert('Upload Success')
         },
         handleFormatError (file) {
             this.$Notice.warning({

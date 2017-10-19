@@ -9,12 +9,17 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
           <div class="pull-left image">
+            <div v-if="user.imageid == 0">
               <img :src="logo" class="img-circle" alt="User Image">
+            </div>
+            <div v-else>
+              <img :src="ImageUrl" width="60px" height ="60px" class="img-circle" alt="User Image">
+            </div>
           </div>
           <div class="pull-left info">
-              <p>{{user.name}}</p>
+              <p>name:{{user.name}}</p>
+              <p>useruniversity:{{user.useruniversity}}</p>
               <!-- Status -->
-              <a href="#/admin"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
           </div>
           <!-- search form (Optional) -->
@@ -32,7 +37,6 @@
             <li><a href="#/authmanager/myborrowbook"><i class="fa fa-link"></i> <span>My Borrowed Book</span></a></li>
             <li><a href="#/authmanager/MyHistory"><i class="fa fa-link"></i> <span>My History</span></a></li>            
           </ul>
-
           <ul v-if="user.role == 2" class="sidebar-menu" data-widget="tree">
             <li class="header">BookManageMent</li>
             <!-- Optionally, you can add icons to the links -->
@@ -41,7 +45,6 @@
             <li><a href="#/admin/category"><i class="fa fa-link"></i> <span>CategoryManage</span></a></li>
             <li><a href="#/admin/bookstore"><i class="fa fa-link"></i> <span>BookManage</span></a></li>
           </ul>
-          
           <ul v-if="user.role == 3" class="sidebar-menu" data-widget="tree">
             <li class="header">ManagerManagement</li>
             <!-- Optionally, you can add icons to the links -->
@@ -69,7 +72,8 @@ export default {
       return {
         logo: logo,
         role: 0,
-        user: ''
+        user: '',
+        ImageUrl: ''
       }
     },
     methods: {
@@ -78,9 +82,11 @@ export default {
       }
     },
     async created () {
-        var res = await axios.post('/api/auth/admininfo');
+        console.log('当前图片编号')
+        var res = await axios.get('/api/auth/admininfo');
         console.log(res.data);
         this.user = res.data
+        this.ImageUrl = `/api/getImage?ImageId=` + this.user.imageid
     },
     components: {
       topbar

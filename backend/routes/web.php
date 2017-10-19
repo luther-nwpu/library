@@ -24,7 +24,7 @@ Route::get("/api/test" , function() {
 // 登录 
 Route::post("/api/auth/register" , 'AuthController@register');
 Route::post("/api/auth/login" , 'AuthController@login');
-Route::post("/api/auth/admininfo", 'AuthController@MyLoginInformation');
+Route::get("/api/auth/admininfo", 'AuthController@MyLoginInformation');
 Route::post("/api/auth/logout", 'AuthController@logout');
 
 Route::post("/api/order/borrowbook", 'OrderController@BorrowBook');

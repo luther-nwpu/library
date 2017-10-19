@@ -9,12 +9,17 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
           <div class="pull-left image">
+            <div v-if="user.imageid == 0">
               <img :src="logo" class="img-circle" alt="User Image">
+            </div>
+            <div v-else>
+              <img :src="ImageUrl" width="60px" height ="60px" class="img-circle" alt="User Image">
+            </div>
           </div>
           <div class="pull-left info">
-              <p>{{user.name}}</p>
+              <p>name:{{user.name}}</p>
+              <p>useruniversity:{{user.useruniversity}}</p>
               <!-- Status -->
-              <a href="#/admin"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
           </div>
           <!-- search form (Optional) -->
@@ -50,7 +55,8 @@ export default {
       return {
         logo: logo,
         role: 0,
-        user: ''
+        user: '',
+        ImageUrl: ''
       }
     },
     methods: {
@@ -59,9 +65,10 @@ export default {
       }
     },
     async created () {
-        var res = await axios.post('/api/auth/admininfo');
+        var res = await axios.get('/api/auth/admininfo');
         console.log(res.data);
         this.user = res.data
+        this.ImageUrl = `/api/getImage?ImageId=` + this.user.imageid
     },
     components: {
       topbar
