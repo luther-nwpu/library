@@ -21,8 +21,7 @@
                       <th class="numeric"> BookCode </th>
                       <th class="numeric"> BookName </th>
                       <th class="numeric"> CategoryName </th>
-                      <th class="numeric"> Description </th>
-                      
+                      <th class="numeric"> Description </th>                
                       <th class="numeric"> ISBN </th>
                       <th class="numeric"> BookAuthor </th>
                       <th class="numeric"> BookLocation </th>
@@ -37,13 +36,12 @@
                       <td> {{info[0].bookname}} </td>
                       <td> {{info[1].name}}</td>
                       <td> {{info[0].description}} </td>
-                      
                       <td> {{info[0].ISBN}} </td>
                       <td> {{info[0].bookauthor}} </td>
                       <td> {{info[0].booklocation}}</td>
                       <td>
                        <router-link :to="{ name: 'editBook', params: { id: info[0].id }}"> <button class="btn btn-xs blue"> Edit </button> </router-link>
-                   <button @click = "deleteBook(info[0].id)">delete</button>
+                        <button @click = "deleteBook(info[0].id)">delete</button>
                       </td>
                     </tr>
                   </tbody>

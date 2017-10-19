@@ -37,7 +37,6 @@ Route::post("/api/order/findbook" , 'BookManageController@findBook');
 
 Route::get("/api/book/getall" , 'BookManageController@getAllBook');
 
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get("/api/order/myallbook", 'OrderController@GetMyAllBorrowedBook');
     Route::post("/api/order/borrowmybook", 'OrderController@BorrowMyBook');
@@ -51,11 +50,12 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
-Route::group(['middleware' => ['admin']], function () {
-    Route::post("/api/category/create" , 'CategoryManageController@createCategory');
-    Route::post("/api/category/del" , 'CategoryManageController@deleteCategory'); 
-    Route::get("/api/category/getall" , 'CategoryManageController@getAllCategory');
-
+Route::group(['middleware' => ['manager']], function () {
+    Route::post("/api/book/createbook" , 'BookManageController@storeBook');
+    
+    Route::post("/api/book/deletebyId" , 'BookManageController@deleteBook'); 
+    Route::post("/api/book/updatebookbyName" , 'BookManageController@updateBook');
+    Route::post("/api/book/findbookByISBN" , 'BookManageController@findBook');
 });
 
 
@@ -63,11 +63,6 @@ Route::group(['middleware' => ['admin']], function () {
 Route::post("/api/upload", 'UploadController@uploadImage');
 Route::get("/api/getImage", 'UploadController@getImage');
 
-// 目录管理
-Route::post("/api/book/del" , 'BookManageController@deleteBook'); 
-Route::post("/api/book/update" , 'BookManageController@updateBook');
-Route::post("/api/book/create" , 'BookManageController@storeBook');
-Route::post("/api/book/findbook" , 'BookManageController@findBook');
 
 
 Route::group(['middleware' => ['admin']], function () {

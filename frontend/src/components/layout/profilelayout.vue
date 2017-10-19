@@ -10,7 +10,7 @@
           <div class="user-panel">
           <div class="pull-left image">
             <div v-if="user.imageid == 0">
-              <img :src="logo" class="img-circle" alt="User Image">
+              <img :src="logo" width="60px" height ="60px" class="img-circle" alt="User Image">
             </div>
             <div v-else>
               <img :src="ImageUrl" width="60px" height ="60px" class="img-circle" alt="User Image">

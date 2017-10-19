@@ -7,31 +7,84 @@ use Illuminate\Http\Request;
 class BookManageController extends Controller
 {
     public function storeBook(Request $request){
-        // 新建模型对象
-        $oldbook = \App\Model\Book::where('bookcode', $request->bookcode)
-                                 ->first();
-        if($oldbook){
-            return response()->json(['create' => false, 'err' => "this book already exist"], 200);
+        for ($i=0; $i<$request->booknum; $i++) {
+            $book = new \App\Model\Book();
+            // 添加表字段内容
+            if($request->category){
+                $book->category = $request->category;
+            } else {
+                $book->category = '';
+            }
+            if($request->isbn) {
+                $book->isbn = $request->isbn;
+            } else {
+                $book->isbn = '';
+            }
+            if($book->title) {
+                $book->title = $request->title;
+            } else {
+                $book->title = '';
+            }
+            if($request->image) {
+                $book->image = $request->image;
+            } else {
+                $book->image = '';       
+            }
+            if($request->author) {
+                $book->author = $request->author;          
+            } else {
+                $book->author = '';                        
+            }
+            if($request->translator) {
+                $book->translator = $request->translator;               
+            } else {
+                $book->translator = '';                                               
+            }
+            if($request->publisher) {
+                $book->publisher = $request->publisher;                                        
+            } else {
+                $book->publisher = '';                                                               
+            }
+            if($request->pudate){
+                $book->pudate = $request->pudate;
+            } else {
+                $book->pudate = '';
+            }
+            if($request->authorintro){
+                $book->authorintro = $request->authorintro;
+            } else {
+                $book->authorintro = '';
+            }
+            if($request->summary){
+                $book->summary = $request->summary;
+            } else {
+                $book->summary = '';                
+            }
+            if($request->catalog){
+                $book->catalog = $request->catalog;
+            } else {
+                $book->catalog = '';       
+            }
+            if($request->price){
+                $book->price = $request->price;
+            } else {
+                $book->price = '';
+            }
+            if($request->pages){
+                $book->pages = $request->pages;
+            } else {
+                $book->pages = '';
+            }
+            if($request->location){
+                $book->location = $request->location;
+            } else {
+                $book->location = '';
+            }
+            $book->created_at = date('Y-m-d H:i:s');
+            $book->updated_at = date('Y-m-d H:i:s');
+            $book->save();
         }
-        $book = new \App\Model\Book();
-        // 添加表字段内容
-        $book->bookname = $request->bookname;
-        $book->bookcode = $request->bookcode;
-        $book->created_at = date('Y-m-d H:i:s');
-        $book->updated_at = date('Y-m-d H:i:s');
-        $book->description = $request->description;
-        $book->category_id = $request->category_id;
-        $book->ISBN = $request->ISBN;
-        $book->bookpublishtime = $request->bookpublishtime;
-        $book->booklocation = $request->booklocation;
-        $book->bookauthor = $request->bookauthor;
-        $book->save();
-        if($request->imageid != 0) {
-            $bookImage = new \App\Model\BookImage();
-            $bookImage->image_id = $request->imageid;
-            $bookImage->book_id = $book_id;
-        }
-        return response()->json(['create' => true, 'book' => $book], 200);
+        return response()->json(['create' => true], 200);
     }
     // 查询
     public function findBook(Request $request){
@@ -74,17 +127,8 @@ class BookManageController extends Controller
         }
     }
     public function getAllBook(){
-        $books = \App\Model\Book::all();
-        $array = array();
-        foreach($books as $book){
-            $category = \App\Model\Category::find($book->category_id);
-            $borrow = \App\Model\Order::where('book_id', $book->id)
-                                        ->where('type_id', 0||1)
-                                        ->first();
-            $rootarray = array();
-            array_push($rootarray, $book, $category, $borrow);
-            array_push($array, $rootarray);
-        }
-        return $array;
+        $books = \App\Model\Book::all()
+				->groupBy('isbn');
+		return $books;
     }
 }

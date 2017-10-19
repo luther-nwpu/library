@@ -69,7 +69,7 @@ class AuthController extends Controller
             $User->updated_at = date('Y-m-d H:i:s');
             $User->password = $request->password;
             $User->email = $request->email;
-            $User->imageid = 1;
+            $User->imageid = 0;
             $User->usercode = $request->usercode;
             $User->usernumber = '';
             $User->username = '';

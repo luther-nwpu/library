@@ -38,7 +38,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" style ="height: 50px">
                                 <!-- The user image in the navbar-->
                                 <span v-if="user.imageid == 0">
-                                    <img :src="logo"  alt="User Image">
+                                    <img :src="logo" width="30px" height ="30px" alt="User Image">
                                 </span>
                                 <span v-else>
                                     <img :src="ImageUrl" width="30px" height ="30px" class="img-circle" alt="User Image">
