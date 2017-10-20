@@ -187,7 +187,7 @@ export default {
 
         },
         async createBook(){
-            if(this.ISBN&&this.category&&this.author&&this.title){
+            if(this.ISBN&&this.category&&this.author&&this.title&&this.booknum>0){
                 console.log('zhanglu')
                 var res = await axios.post('/api/book/createbook', {
                     category: this.category,
