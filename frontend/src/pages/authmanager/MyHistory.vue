@@ -12,39 +12,36 @@
                 <table class="table table-striped table-bordered" id="mytable">
                   <thead>
                     <tr>
-                      <!-- <th class="numeric"> BookId </th> -->
-                      <th class="numeric"> BookCode </th>
-                      <th class="numeric"> BookName </th>
-                      <!-- <th class="numeric"> CategoryName </th> -->
-                      <!-- <th class="numeric"> Description </th> -->
-                      
+                      <th class="numeric"> BookID </th>
+                      <th class="numeric"> BookTitle </th>
                       <th class="numeric"> ISBN </th>
                       <th class="numeric"> BookAuthor </th>
                       <th class="numeric"> BookLocation </th>
                       <th class="numeric"> Borrow Time </th>
                       <th class="numeric"> Return Time </th>
-                      <!-- <th class="numeric"> BookInfo </th> -->
-                      <!-- <th class="numeric"> Operation </th> -->
+                      <th> Borrow Type </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(info,index) in books" :key="index">
-                      <!-- <td> {{info[0].book_id}} </td> -->
-                      <td> {{info[1].bookcode}} </td>
-                      <td> {{info[1].bookname}} </td>
-                      <!-- <td> {{info[1].name}}</td> -->
-                      <!-- <td> {{info[1].description}} </td> -->
-                      
-                      <td> {{info[1].ISBN}} </td>
-                      <td> {{info[1].bookauthor}} </td>
-                      <td> {{info[1].booklocation}}</td>
+                      <td> <router-link :to="{name: 'bookdetail', params: {isbn: info[1].isbn}}">{{info[1].id}}</router-link> </td>
+                      <td> <router-link :to="{name: 'bookdetail', params: {isbn: info[1].isbn}}">{{info[1].title}}</router-link> </td>
+                      <td> {{info[1].isbn}} </td>
+                      <td> {{info[1].author}} </td>
+                      <td> {{info[1].location}} </td>
                       <td> {{info[0].created_at}} </td>
                       <td> {{info[0].return_time}}</td>
-                      <!-- <td> <button type="button" class="btn btn-primary">Renew</button></td> -->
-                      <!-- <td> -->
-                       <!-- <router-link :to="{ name: 'editBook', params: { id: info[0].id }}"> <button class="btn btn-xs blue"> Edit </button> </router-link> -->
-                   <!-- <button @click = "deleteBook(info[0].id)">delete</button> -->
-                      <!-- </td> -->
+                      <td> 
+                      <div v-if="info[0].type_id == 0">
+                        Borrowed
+                      </div>
+                      <div v-else-if="info[0].type_id == 1">
+                        Renewed
+                      </div> 
+                      <div v-else-if="info[0].type_id == 2">
+                        Returned
+                      </div> 
+                      </td>
                     </tr>
                   </tbody>
                 </table>

@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/api/auth/resetMyPassword', 'AuthController@resetMyPassword');
     Route::post('/api/auth/resetMyImage', 'AuthController@resetMyImage');
     Route::post('/api/auth/resetMyUserCode', 'AuthController@resetMyUserCode'); 
+	
+	Route::post("/api/order/renewmybook", 'OrderController@RenewMyBook');
 });
 
 Route::post("/api/book/getBookAllImage" , 'BookManageController@getBookAllImage');

@@ -9,6 +9,11 @@ export default {
       {
         path: 'MyHistory',
         component: resolve => require(['@/pages/authmanager/MyHistory.vue'], resolve)
+      },
+      {
+        path: 'bookdetail/:isbn',
+        name: 'bookdetail',
+        component: resolve => require(['@/pages/authmanager/MyBookInfo.vue'], resolve)
       }
     ]
   }

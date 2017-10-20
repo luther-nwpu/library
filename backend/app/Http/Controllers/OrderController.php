@@ -111,29 +111,24 @@ class OrderController extends Controller
         } else {
             // 新建模型对象
 			$order->return_time = date($order->return_time,strtotime('+1 month'));
-            $book->type = 1;
-            $book->save();		
+            $order->type_id = 1;
+            $order->save();		
             return response()->json(['renew' => true], 200);
         }
     }
     // 自己可以借,book_id
     public function RenewMyBook(Request $request){
-        $book = \App\Model\Order::where('book_id', $request->book_id)
-                                ->where('user_id', session('id'))
+        $order = \App\Model\Order::where('book_id', $request->book_id)
                                 ->where('type_id', 0)
                                 ->first();
-        $borrowbook = \App\Model\Book::find($request->book_id);
-        if(!$borrowbook)
+        if(!$order)
         {
-            return response()->json(['renew' => false], 200);
-        }
-        if($book){
-            return response()->json(['renew' => false], 200);
+            return response()->json(['renew' => false, 'err' => 'No this BorrowBook'], 200);
         } else {
             // 新建模型对象
-            $book->return_time = $book->return_time + 3600*24*10;
-            $book->type = 1;
-            $book->save();
+			$order->return_time = date($order->return_time,strtotime('+1 month'));
+            $order->type_id = 1;
+            $order->save();		
             return response()->json(['renew' => true], 200);
         }
     }

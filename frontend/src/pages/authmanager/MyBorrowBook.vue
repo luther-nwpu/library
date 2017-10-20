@@ -12,39 +12,35 @@
                 <table class="table table-striped table-bordered" id="mytable">
                   <thead>
                     <tr>
-                      <!-- <th class="numeric"> BookId </th> -->
-                      <th class="numeric"> BookCode </th>
-                      <th class="numeric"> BookName </th>
-                      <!-- <th class="numeric"> CategoryName </th> -->
-                      <th class="numeric"> Description </th>
-                      
-                      <th class="numeric"> ISBN </th>
+                      <th class="numeric"> BookId </th>
+                      <th class="numeric"> BookTitle </th>
+                      <th class="numeric"> BookCategory </th>
                       <th class="numeric"> BookAuthor </th>
                       <th class="numeric"> BookLocation </th>
+                      <th> BorrowType </th>
                       <th class="numeric"> Borrow Time </th>
                       <th class="numeric"> Return Time </th>
-                      <!-- <th class="numeric"> BookInfo </th> -->
                       <th class="numeric"> Operation </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(info,index) in books" :key="index">
-                      <!-- <td> {{info[0].id}} </td> -->
-                      <td> {{info[1].bookcode}} </td>
-                      <td> {{info[1].bookname}} </td>
-                      <!-- <td> {{info[1].name}}</td> -->
-                      <td> {{info[1].description}} </td>
-                      
-                      <td> {{info[1].ISBN}} </td>
-                      <td> {{info[1].bookauthor}} </td>
-                      <td> {{info[1].booklocation}}</td>
+                      <td> <router-link :to="{name: 'bookdetail', params: {isbn: info[1].isbn}}">  {{info[1].id}} </router-link> </td>
+                      <td> <router-link :to="{name: 'bookdetail', params: {isbn: info[1].isbn}}">  {{info[1].title}} </router-link> </td>
+                      <td> {{info[1].category}} </td>
+                      <td> {{info[1].author}} </td>
+                      <td> {{info[1].location}} </td>
+                      <td> 
+                        <div v-if = "info[0].type_id == 0">
+                        Borrowed
+                        </div>
+                        <div v-if = "info[0].type_id == 1">
+                          Renewed
+                        </div>
+                      </td>
                       <td> {{info[0].created_at}} </td>
                       <td> {{info[0].return_time}}</td>
-                      <td> <button type="button" class="btn btn-primary">Renew</button></td>
-                      <!-- <td> -->
-                       <!-- <router-link :to="{ name: 'editBook', params: { id: info[0].id }}"> <button class="btn btn-xs blue"> Edit </button> </router-link> -->
-                   <!-- <button @click = "deleteBook(info[0].id)">delete</button> -->
-                      <!-- </td> -->
+                      <td> <button type="button" class="btn btn-primary" @click = "renewbook(info[1].id, info[0].type_id)">Renew</button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -77,6 +73,20 @@ export default {
         this.$nextTick(function() {
           $('#mytable').dataTable();
         })
+    },
+    methods: {
+      async renewbook(index, type) {
+        var res = await axios.post('/api/order/renewbook', {
+            book_id: index
+        })
+        type = 1;
+        console.log(res)
+        if(res.data.renew) {
+          alert("renew Success")
+        } else {
+          alert("renew Failed")
+        }
+      }
     }
 }    
 </script>
