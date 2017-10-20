@@ -12,14 +12,16 @@
         <span class = "col-md-2"> 
             <input type = "text" class = "form-control" v-model = "category" ref = "input2" :readonly = "repeat"/></span>
         <span class = "col-md-1"></span>
-        <span class = "col-md-1">
-            <h1>Image:</h1>
-        </span>
-        <span class = "col-md-1">
-            <div class="demo-upload-list"> 
-                <img :src="image" width="10%"/>
-            </div>
-        </span>
+        <div v-if="image">
+            <span class = "col-md-1">
+                <h1>Image:</h1>
+            </span>
+            <span class = "col-md-1">
+                <div class="demo-upload-list"> 
+                    <img :src="image" width="10%"/>
+                </div>
+            </span>
+        </div>
     </div>
     <br>
     <div class = "row">
@@ -142,7 +144,7 @@ export default {
                 this.author = cx.author
                 this.translator = cx.translator
                 this.publisher = cx.publisher
-                this.pubdate = cx.pubdate
+                this.pudate = cx.pudate
                 this.authorintro = cx.authorintro
                 this.summary = cx.summary
                 this.catalog = cx.catalog
@@ -193,7 +195,7 @@ export default {
                     author: this.author,
                     translator: this.translator,
                     publisher: this.publisher,
-                    pudate: this.pubdate,
+                    pudate: this.pudate,
                     authorintro: this.authorintro,
                     summary: this.summary,
                     catalog: this.catalog,

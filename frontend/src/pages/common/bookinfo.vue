@@ -1,76 +1,84 @@
 <template>
     <div>
     <br>
-    <h3> Add Book (Remarks: You Can Input The ISBN Enter Quickly Fill The Info) </h3>
+    <h3> Book Detail </h3>
     <br>
+    <div v-if="image">
+        <span class = "col-md-1">
+            <h1>Image:</h1>
+        </span>
+        <span class = "col-md-1">
+            <div class="demo-upload-list"> 
+                <img :src="image" width="10%"/>
+            </div>
+        </span>
+    </div>
     <div class = "row">
         <span class = "col-md-2"><h1> title:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "title"/>
+            {{title}}
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1> author:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "author"/>
+            {{author}}
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> translator:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = " translator"/>
+            {{translator}}
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1> publisher:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "publisher"/>
+            {{publisher}}
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> price:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "price"/>
+            {{price}}
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1> pages:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "pages"/>
+            {{pages}}
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> pudate:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "pudate"/>
+            {{pudate}}
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1>summary:</h1></span>
         <span class = "col-md-3">
-             <Input v-model="summary" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="please Input..."></Input>
+             {{summary}}
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> catalog:</h1></span>
         <span class = "col-md-3">
-           <Input v-model="catalog" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="please Input..."></Input>
+           {{catalog}}
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1>authorintro:</h1></span>
         <span class = "col-md-3">
-             <Input v-model="authorintro" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="please Input..."></Input>
+                {{authorintro}}
         </span>
     </div>
     <br>
-    <div class = "row">
-        <span class = "col-md-3">
-            <button class = "btn btn-primary" @click = "updateBook()"> Update Book </button>
-        </span>
-        <span class = "col-md-3">
-            <button class = "btn btn-primary"  @click = "ReturnLast()"> Cancel </button>
-        </span>
-    </div>  
+    <div class="demo-upload-list" v-for="(item,index) in imgs" :key="index">
+        <img :src="item.imgurl">
+        <div class="demo-upload-list-cover">
+            <Icon type="ios-trash-outline" @click.native="handleRemove(item, index)"></Icon>
+        </div>
+    </div>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">This ISBN Book</h3>
@@ -83,17 +91,13 @@
                 <tbody>
                     <tr>
                         <th>BookID</th>
-                        <th>BookTitle</th>
                         <th width = "20%">BookLocation</th>
                         <th>BookInfo</th>
-                        <th>Operation</th>
                     </tr>
                     <tr v-for = "(content,index) in contents" :key = "index">
                         <td>{{content[0].id}}</td>
-                        <td>{{content[0].title}}</td>
-                        <td><input type = "text" v-model = "content[0].location" class = "form-control" width="60px"/></td>
+                        <td>{{content[0].location}}</td>
                         <td> {{content[1]}}</td>
-                        <td> <button @click = "updatelocation(content[0].location,content[0].id)">Update Book </button> <button @click = "deletebook(content[0].id, index)">Delete Book </button> </td>
                     </tr>
                 </tbody>
               </table>
@@ -130,6 +134,16 @@ export default {
         this.pages = cx.pages
         this.category = cx.category
         this.price = cx.price
+        var res0 = await axios.post('/api/book/getBookAllImage', {
+            isbn: this.ISBN
+        })
+        console.log(res0)
+        for(var ims of res0.data.images){
+            this.imgs.push({
+                imgid: ims.image_id,
+                imgurl: `/api/getImage?ImageId=` + ims.image_id
+            })
+        }
     },
     data () {
         return {
@@ -146,36 +160,11 @@ export default {
             catalog: '',
             price: '',
             pages: '',
-            category: ''
+            category: '',
+            imgs: []
         }
     },
     methods: {
-        async updateBook(){
-            if(this.ISBN&&this.category&&this.author&&this.title){
-                console.log('zhanglu')
-                var res = await axios.post('/api/book/createbook', {
-                    category: this.category,
-                    title: this.title,
-                    author: this.author,
-                    translator: this.translator,
-                    publisher: this.publisher,
-                    pudate: this.pubdate,
-                    authorintro: this.authorintro,
-                    summary: this.summary,
-                    catalog: this.catalog,
-                    price: this.price,
-                    pages: this.pages
-                }) 
-                console.log(res)
-                if(res.data.create) {
-                    alert('Update Success')
-                } else {
-                    alert('Update False')
-                }
-            } else {
-                alert('Please Input ISBN Category Title Author')
-            }
-        },
         ReturnLast() {
             this.$router.push({//你需要接受路由的参数再跳转
                 path: '/admin/bookstore'

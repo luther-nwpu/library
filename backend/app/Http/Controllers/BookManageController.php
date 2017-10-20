@@ -161,19 +161,19 @@ class BookManageController extends Controller
     }
     // 更新
     public function updateBookISBN(Request $request){
-        $book = \App\Model\Book::where('id', $request->id)
-								->first();
-		if($book){			
+        $books = \App\Model\Book::where('isbn', $request->isbn)
+								->get();
+		foreach($books as $book){
 			if($request->category){
                 $book->category = $request->category;
             } else {
-				return response()->json(['create' => false], 200);
+				return response()->json(['update' => false], 200);
                 $book->category = '';
             }
             if($request->title) {
                 $book->title = $request->title;
             } else {
-				return response()->json(['create' => false], 200);
+				return response()->json(['update' => false], 200);
                 $book->title = '';
             }
             if($request->author) {
@@ -222,11 +222,8 @@ class BookManageController extends Controller
                 $book->pages = '';
             }
 			$book->save();
-			return response()->json(['update' => true], 200);
-		} else{
-			
-			return response()->json(['update' => false], 200);
-		}
+		}			
+		return response()->json(['update' => true], 200);
     }
     public function getAllBook(){
         $books = \App\Model\Book::all()

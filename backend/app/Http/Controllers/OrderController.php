@@ -8,15 +8,47 @@ class OrderController extends Controller
 {
     // 所有人都可以借， request 存的是当前用户id与书的id book_id    user_id
     public function BorrowBook(Request $request) {
+		if(!($request->user_id&&$request->book_id)) {
+			return response()->json(['borrow' => false, 'err' => 'Please Input BookID And Userid'], 200);
+		}
         $book = \App\Model\Order::where('book_id', $request->book_id)
                                 ->where('type_id', '<', 2)
                                 ->first();
         if($book) {
 			return response()->json(['borrow' => false, 'err' => 'The Book Already Borrowed'], 200);
 		} else {
-			$user = \App\User::where($request->user_id)
+			$user = \App\User::where('id', $request->user_id)
 							->first();
 			if($user) {
+				$orders = \App\Model\Order::where('user_id', $request->user_id)
+											->where('type_id', '<', 2)
+											->get();
+				if(count($orders)>=5){
+					return response()->json(['borrow' => false, 'err' => "The User Only Borrow 5 Books"], 200);
+				} else {
+					foreach($orders as $order){
+						$mybook = \App\Model\Book::where('id', $order->book_id)
+												->first();
+						if($mybook){
+							foreach($orders as $order1) {
+								if($order1->id == $order->id) {
+									continue;
+								}
+								$mybook1 = \App\Model\Book::where('id', $order->book_id)
+														->first();
+								if($mybook1) {
+									if($mybook1->isbn == $mybook->isbn) {
+										return response()->json(['borrow' => false, 'err' => "This Type Book Can't Be Borrowed Two"], 200);
+									}
+								} else {
+									continue;
+								}									
+							}
+						} else {
+							continue;
+						}
+					}
+				}
 				$order = new \App\Model\Order() ;
 				$order->user_id = $request->user_id;
 				$order->book_id = $request->book_id;
@@ -25,6 +57,7 @@ class OrderController extends Controller
 				$order->updated_at = date('Y-m-d H:i:s');
 				$order->type_id = 0;
 				$order->save();
+				return response()->json(['borrow' => true], 200);
 			} else {
 				return response()->json(['borrow' => false, 'err' => 'No user'], 200);
 			}
@@ -33,15 +66,18 @@ class OrderController extends Controller
 
     // request book_id 直接还书
     public function ReturnBook(Request $request) {
+		if(!$request->book_id) {
+			return response()->json(['delete' => false], 200);
+		}
         $order = \App\Model\Order::where('book_id', $request->book_id)
-                -> where('type_id', 0)
+                -> where('type_id', '<', 2)
                 ->first();
         if($order){
             $order->type_id = 2;
             $order->save();
             return response()->json(['delete' => true], 200);
         } else {
-            return response()->json(['delete' => false], 200);
+            return response()->json(['delete' => true], 200);
         }
     }
 
@@ -64,29 +100,19 @@ class OrderController extends Controller
         return $array;
     }
 
-    // 所有人都可以借， request 存的是当前用户id与书的id book_id    uset_id
+    // 所有人都可以借， request 存的是当前用户id与书的id book_id
     public function RenewBook(Request $request){
-        $book = \App\Model\Order::where('book_id', $request->book_id)
-                                ->where('user_id', $request->user_id)
+        $order = \App\Model\Order::where('book_id', $request->book_id)
                                 ->where('type_id', 0)
                                 ->first();
-        $user = \App\User::find($request->user_id);
-        if(!$user)
+        if(!$order)
         {
-            return response()->json(['renew' => false], 200);
-        }
-        $borrowbook = \App\Model\Book::find($request->book_id);
-        if(!$borrowbook)
-        {
-            return response()->json(['renew' => false], 200);
-        }
-        if($book){
-            return response()->json(['renew' => false], 200);
+            return response()->json(['renew' => false, 'err' => 'No this BorrowBook'], 200);
         } else {
             // 新建模型对象
-            $book->return_time = $book->return_time + 3600*24*10;
+			$order->return_time = date($order->return_time,strtotime('+1 month'));
             $book->type = 1;
-            $book->save();
+            $book->save();		
             return response()->json(['renew' => true], 200);
         }
     }
@@ -113,7 +139,7 @@ class OrderController extends Controller
     }
 
     public function GetBorrowedBook(Request $request) {
-        $user = \App\User::where($request->user_id)
+        $user = \App\User::where('id', $request->user_id)
 							->first();
         if(!$user){
             return response()->json(['get' => false], 200);

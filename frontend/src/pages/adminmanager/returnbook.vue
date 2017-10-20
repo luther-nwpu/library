@@ -8,9 +8,7 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            email: '',
-            book_id: '',
-            user_id: ''
+            book_id: ''
         }
     },
     methods: {
@@ -22,11 +20,11 @@ export default {
                 console.log(res)
                 if(res.data.delete){
                     alert("Return Success");
-                    this.$Message.info("Return Success");
                 } else {
-                    alert(res.data.err)
-                    this.$Message.error(res.data.err)
+                   alert('Please Input BookID')
                 }
+            } else {
+                alert('Please Input BookID')
             }
         }
     }

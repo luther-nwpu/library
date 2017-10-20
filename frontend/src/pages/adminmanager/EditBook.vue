@@ -147,7 +147,7 @@ export default {
         this.author = cx.author
         this.translator = cx.translator
         this.publisher = cx.publisher
-        this.pubdate = cx.pubdate
+        this.pudate = cx.pudate
         this.authorintro = cx.authorintro
         this.summary = cx.summary
         this.catalog = cx.catalog
@@ -188,13 +188,14 @@ export default {
         async updateBook(){
             if(this.ISBN&&this.category&&this.author&&this.title){
                 console.log('zhanglu')
-                var res = await axios.post('/api/book/createbook', {
+                var res = await axios.post('api/book/updatebookByISBN', {
+                    isbn: this.ISBN,
                     category: this.category,
                     title: this.title,
                     author: this.author,
                     translator: this.translator,
                     publisher: this.publisher,
-                    pudate: this.pubdate,
+                    pudate: this.pudate,
                     authorintro: this.authorintro,
                     summary: this.summary,
                     catalog: this.catalog,
@@ -202,7 +203,7 @@ export default {
                     pages: this.pages
                 }) 
                 console.log(res)
-                if(res.data.create) {
+                if(res.data.update) {
                     alert('Update Success')
                 } else {
                     alert('Update False')
