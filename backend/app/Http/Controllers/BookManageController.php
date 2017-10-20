@@ -99,6 +99,7 @@ class BookManageController extends Controller
             if($request->location){
                 $book->location = $request->location;
             } else {
+				return response()->json(['create' => false], 200);
                 $book->location = '';
             }
             $book->created_at = date('Y-m-d H:i:s');

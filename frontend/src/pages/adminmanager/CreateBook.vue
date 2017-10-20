@@ -4,13 +4,13 @@
     <h3> Add Book (Remarks: You Can Input The ISBN Enter Quickly Fill The Info) </h3>
     <br>
     <div class = "row">
-        <span class = "col-md-2"><h1> ISBN:</h1></span>
+        <span class = "col-md-2"><h1>ISBN:</h1></span>
         <span class = "col-md-2">
-            <input type = "text" class = "form-control" v-model = "ISBN" @keyup.enter = "searchbook()"/>
+            <input type = "text" class = "form-control" v-model = "ISBN" v-on:blur = "searchbook()" v-focus-next-on-enter="'input2'"/>
         </span>
         <span class = "col-md-1">Category:</span>
-        <span class = "col-md-2"> <input type = "text" class = "form-control" v-model = "category" @keyup.enter = "searchbook()"/></span>
-
+        <span class = "col-md-2"> 
+            <input type = "text" class = "form-control" v-model = "category" ref = "input2" :readonly = "repeat"/></span>
         <span class = "col-md-1"></span>
         <span class = "col-md-1">
             <h1>Image:</h1>
@@ -25,60 +25,60 @@
     <div class = "row">
         <span class = "col-md-2"><h1> title:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "title"/>
+            <input type = "text" class = "form-control" v-model = "title" :readonly = "repeat"/>
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1> author:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "author"/>
+            <input type = "text" class = "form-control" v-model = "author" :readonly = "repeat"/>
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> translator:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = " translator"/>
+            <input type = "text" class = "form-control" v-model = " translator" :readonly = "repeat"/>
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1> publisher:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "publisher"/>
+            <input type = "text" class = "form-control" v-model = "publisher" :readonly = "repeat"/>
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> price:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "price"/>
+            <input type = "text" class = "form-control" v-model = "price" :readonly = "repeat"/>
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1> pages:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "pages"/>
+            <input type = "text" class = "form-control" v-model = "pages" :readonly = "repeat"/>
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> pudate:</h1></span>
         <span class = "col-md-3">
-            <input type = "text" class = "form-control" v-model = "pudate"/>
+            <input type = "text" class = "form-control" v-model = "pudate" :readonly = "repeat"/>
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1>summary:</h1></span>
         <span class = "col-md-3">
-             <Input v-model="summary" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="请输入..."></Input>
+             <Input v-model="summary" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="Please Input..." :readonly = "repeat"></Input>
         </span>
     </div>
     <br>
     <div class = "row">
         <span class = "col-md-2"><h1> catalog:</h1></span>
         <span class = "col-md-3">
-           <Input v-model="catalog" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="请输入..."></Input>
+           <Input v-model="catalog" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="Please Input..." :readonly = "repeat"></Input>
         </span>
         <span class = "col-md-1"></span>
         <span class = "col-md-2"><h1>authorintro:</h1></span>
         <span class = "col-md-3">
-             <Input v-model="authorintro" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="请输入..."></Input>
+             <Input v-model="authorintro" type="textarea" :autosize="{minRows: 1,maxRows: 5}" placeholder="Please Input..." :readonly = "repeat"></Input>
         </span>
     </div>
     <br>
@@ -124,35 +124,63 @@ export default {
             pages: '',
             category: '',
             location: '',
-            booknum: 1
+            booknum: 1,
+            repeat: false
         }
     },
     methods: {
         async searchbook(){
-            var url = 'https://api.douban.com/v2/book/isbn/' + this.ISBN
-            var self = this
-            $.ajax(url, {
-                dataType: 'jsonp',
-                success: function(data) {
-                    console.log(data);
-                    self.title = data.title               
-                    self.image = data.image
-                    self.author = ''
-                    for(var authora of data.author){
-                        self.author = self.author + authora + ','
-                    }
-                    for(var translatora of data.translator){
-                        self.translator = self.translator + translatora + ','
-                    }
-                    self.publisher = data.publisher
-                    self.pudate = data.pubdate
-                    self.authorintro = data.author_intro
-                    self.summary = data.summary
-                    self.catalog = data.catalog
-                    self.price = data.price
-                    self.pages = data.pages
-                }
+            var res = await axios.post('/api/book/findAllBookByISBN', {
+                isbn: this.ISBN
             })
+            console.log(res)
+            if(res.data.find && res.data.book.length != 0){       
+                var cx = res.data.book[0][0]
+                console.log(res.data.book[0][0])
+                this.title = cx.title
+                this.image = cx.image
+                this.author = cx.author
+                this.translator = cx.translator
+                this.publisher = cx.publisher
+                this.pubdate = cx.pubdate
+                this.authorintro = cx.authorintro
+                this.summary = cx.summary
+                this.catalog = cx.catalog
+                this.pages = cx.pages
+                this.category = cx.category
+                this.price = cx.price
+                this.repeat = true;
+            }else {
+                this.repeat = false;
+                var url = 'https://api.douban.com/v2/book/isbn/' + this.ISBN
+                var self = this
+                $.ajax(url, {
+                    dataType: 'jsonp',
+                    success: function(data) {
+                        console.log(data);
+                        self.title = data.title               
+                        self.image = data.image
+                        self.author = ''
+                        for(var authora of data.author){
+                            self.author = self.author + authora + ','
+                        }
+                        for(var translatora of data.translator){
+                            self.translator = self.translator + translatora + ','
+                        }
+                        self.publisher = data.publisher
+                        self.pudate = data.pubdate
+                        self.authorintro = data.author_intro
+                        self.summary = data.summary
+                        self.catalog = data.catalog
+                        self.price = data.price
+                        self.pages = data.pages
+                    },
+                    error: function(error) {
+                        alert('From DouBan Api Error, Please Input Information Or Input ISBN Again')
+                    }
+                })
+            }
+
         },
         async createBook(){
             if(this.ISBN&&this.category&&this.author&&this.title){

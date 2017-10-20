@@ -40,7 +40,6 @@ export default {
         }
     },
     async created () {
-        console.log('2222222222222')
         var res = await axios.get('/api/book/getall');
         console.log(res)
         this.books = res.data;

@@ -32,7 +32,7 @@ Route::post("/api/order/renewbook", 'OrderController@RenewBook');
 Route::post("/api/order/returnbook", 'OrderController@ReturnBook');
 Route::post("/api/order/allborrowbook", 'OrderController@GetBorrowedBook');
 
-Route::post("/api/order/getUserByUserCode", 'OrderController@getUserByUserCode');
+Route::post("/api/order/getUserByUserCode", 'OrderController@GetUserByUserCode');
 
 Route::post("/api/order/findbook" , 'BookManageController@findBook');
 

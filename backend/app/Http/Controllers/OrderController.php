@@ -167,5 +167,14 @@ class OrderController extends Controller
     public function GetHistoryBookById(){
 
     }
+	public function GetUserByUserCode(Request $request) {
+		$user = \App\User::where('usercode', $request->usercode)
+							->first();
+		if($user){
+            return response()->json(['get' => true, 'user' => $user], 200);
+		} else {
+            return response()->json(['get' => false], 200);
+		}
+	}
 
 }

@@ -2,13 +2,13 @@
 <div>
     <div class="row">
         <div class="col-md-6 border">
-            UserCode:<input v-model = "usercode" @keyup.enter = "getUserInfo()" v-focus-next-on-enter="'input2'"/>
+            UserCode:<input v-model = "usercode" v-on:blur="getUserInfo()"  v-focus-next-on-enter="'input2'"/>
         </div>
         <div class="col-md-6">
-            Bookcode: <input type = "text" v-model = "book_id" @keyup.enter = "borrowbook()" ref = "input2"/>
+            Bookcode: <input type = "text"  v-model = "book_id" ref = "input2"/>
         </div>
         {{user}}
-        <button @click = "borrowBook()"> </button>
+        <button @click = "getUserInfo()"> dsadsa</button>
     </div>
 </div>
 </template>
@@ -55,16 +55,13 @@ export default {
             }
         },
         async getUserInfo() {
-            var res = await axios.post('/api/order/getuser', {
-                email: this.email
+            var res = await axios.post('/api/order/getUserByUserCode', {
+                usercode: this.usercode
             });
             console.log(res)
-            if(res.data.search == false) {
-                alert('No This User')
+            if(res.data.search) {
             } else {
-                console.log(res.data.user.id)
-                this.user_id = res.data.user.id
-                this.user = res.data.user
+                alert('No This User')
             }
         }
     }
