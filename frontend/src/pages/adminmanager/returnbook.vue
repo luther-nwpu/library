@@ -1,6 +1,18 @@
 <template>
     <div>
-        Bookid: <input type="text" v-model = "book_id"/> <button @click = "returnbook"> return Book </button>
+        <br>
+        <div class = "row">
+            <div class = "col-md-2"></div>
+            <div class = "col-md-2">
+                <h2> Bookid: </h2>
+            </div>
+            <div class = "col-md-2">
+                <input type="text" class = "form-control" v-model = "book_id" @keyup.enter = "returnbook()"/> 
+            </div>
+            <div class = "col-md-2">
+                <button  class = "btn btn-primary" @click = "returnbook()"> return Book </button>
+            </div>
+        </div>
     </div>
 </template>
 <script>

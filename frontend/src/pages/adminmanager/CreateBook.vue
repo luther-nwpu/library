@@ -1,6 +1,8 @@
 <template>
     <div>
     <br>
+    <button class = "btn btn-primary"  @click = "ReturnLast()" style = "float: left; margin-left: 10px"> Return Last </button>
+
     <h3> Add Book (Remarks: You Can Input The ISBN Enter Quickly Fill The Info) </h3>
     <br>
     <div class = "row">

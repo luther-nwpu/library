@@ -1,28 +1,37 @@
 <template>
+    <div content-wrapper>
+    <br>
+    <br>
     <div>
-    <br>
-    <h3> Book Detail </h3>
-    <br>
-    <div v-if="image">
-        <span class = "col-md-1">
-            <h1>Image:</h1>
-        </span>
-        <span class = "col-md-1">
-            <div class="demo-upload-list"> 
-                <img :src="image" width="10%"/>
-            </div>
-        </span>
+        <div class = "col-md-2">
+            <button class = "btn btn-primary" @click = "ReturnLast()"> Return Last</button>
+        </div>
+        <h3> Book Detail </h3>
     </div>
+    <br>
+    <br>
     <div class = "row">
         <span class = "col-md-2"><h1> title:</h1></span>
         <span class = "col-md-3">
             {{title}}
         </span>
-        <span class = "col-md-1"></span>
-        <span class = "col-md-2"><h1> author:</h1></span>
-        <span class = "col-md-3">
+        <span class = "col-md-1"><h1> author:</h1></span>
+        <span class = "col-md-1">
             {{author}}
         </span>
+        <span class = "col-md-5">  
+        <div v-if="image">
+            <span class = "col-md-6">
+                <h1>Image:</h1>
+            </span>
+            <span class = "col-md-6">
+                <div class="demo-upload-list"> 
+                    <img :src="image" width="10%"/>
+                </div>
+            </span>
+        </div>
+        </span>
+
     </div>
     <br>
     <div class = "row">
@@ -73,41 +82,61 @@
         </span>
     </div>
     <br>
-    <div class="demo-upload-list" v-for="(item,index) in imgs" :key="index">
-        <img :src="item.imgurl">
-        <div class="demo-upload-list-cover">
-            <Icon type="ios-trash-outline" @click.native="handleRemove(item, index)"></Icon>
-        </div>
+    <div style = "float: left; margin-left: 10px">
+        <h2>Picture Collection</h2>
     </div>
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">This ISBN Book</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box">
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody>
-                    <tr>
-                        <th>BookID</th>
-                        <th width = "20%">BookLocation</th>
-                        <th>BookInfo</th>
-                    </tr>
-                    <tr v-for = "(content,index) in contents" :key = "index">
-                        <td>{{content[0].id}}</td>
-                        <td>{{content[0].location}}</td>
-                        <td> {{content[1]}}</td>
-                    </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-            <!-- /.box-body -->
+    <div class="demo-upload-list" v-for="(item,index) in imgs" :key="index">
+        <img :src="item.imgurl"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
     <br>
-
+        <div class = "row" style = "margin-left: 10px">
+            <div class="box">
+                <div class="box-header">
+                    <h3 style = "float: left"> Borrow Detail </h3>
+                    <h3 class="box-title">This ISBN Book</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th>BookID</th>
+                                <th width = "20%">BookLocation</th>
+                                <th>BookInfo</th>
+                            </tr>
+                            <tr v-for = "(content,index) in contents" :key = "index">
+                                <td>{{content[0].id}}</td>
+                                <td>{{content[0].location}}</td>
+                                <td> 
+                                <div v-if ="!content[1]">
+                                    avaliable
+                                </div>
+                                <div v-if ="content[1]">
+                                    <div v-if = "content[1].type_id == 0">
+                                        Borrow;;;;
+                                        Borrowed Time {{content[1].created_at}}
+                                        Should Borrow Time {{content[1].return_time}}
+                                    </div>
+                                    <div v-if = "content[1].type_id == 1">
+                                        Renew;;;;
+                                        Borrowed Time {{content[1].created_at}}
+                                        Should Borrow Time {{content[1].return_time}}
+                                    </div>
+                                    <div v-if = "content[1].type_id == 2">
+                                        Avaliable
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
     </div> 
 </template>
 <script>
@@ -166,9 +195,7 @@ export default {
     },
     methods: {
         ReturnLast() {
-            this.$router.push({//你需要接受路由的参数再跳转
-                path: '/admin/bookstore'
-            });
+            this.$router.go(-1)
         }
     }
 }    
@@ -176,8 +203,8 @@ export default {
 <style scoped>
     .demo-upload-list{
         display: inline-block;
-        width: 60px;
-        height: 60px;
+        width: 150px;
+        height: 150px;
         text-align: center;
         line-height: 60px;
         border: 1px solid transparent;

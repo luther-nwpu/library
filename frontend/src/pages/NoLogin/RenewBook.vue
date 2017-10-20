@@ -1,8 +1,21 @@
 <template>
     <div>
-    用户id: <input type = "text" v-model = "user_id"/>
-    书籍id: <input type = "text" v-model = "book_id"/>
-    <button @click ="renewBook()">续借书籍</button>
+    <br>
+        <button class = "btn btn-primary" @click = "returnlast()" style = "float: left; margin-left: 50px">Return Last</button>
+        <br>
+        <br>
+        <div class = "row">
+            <div class = "col-md-2"></div>
+            <div class = "col-md-2">
+                <h2> Bookid: </h2>
+            </div>
+            <div class = "col-md-2">
+                <input type="text" class = "form-control" v-model = "book_id" @keyup.enter = "returnbook()"/> 
+            </div>
+            <div class = "col-md-2">
+                <button  class = "btn btn-primary" @click = "returnbook()"> renew Book </button>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -10,16 +23,27 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            user_id: '',
             book_id: ''
-        }   
+        }
     },
     methods: {
-        async renewBook() {
-            var res = await axios.post('/api/order/renewbook', {
-                user_id: this.user_id,
-                book_id: this.book_id
-            });
+        async returnbook() {
+            if (this.book_id) {
+                var res = await axios.post('/api/order/renewbook', {
+                    book_id: this.book_id
+                });
+                console.log(res)
+                if(res.data.renew){
+                    alert("Renew Success");
+                } else {
+                   alert('BookID ERROR; Please Input BookID Again')
+                }
+            } else {
+                alert('Please Input BookID')
+            }
+        },
+        returnlast(){
+            this.$router.go(-1)
         }
     }
 }

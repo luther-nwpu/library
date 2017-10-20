@@ -5,45 +5,30 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">AllBook</h3>
+              <button class = "btn btn-primary" style ="float: right"  @click ="linktoindex()"> Switch To library</button>
             </div>
-            <!-- /.box-header -->
             <div class="box-body">
               <div class="row" style ="margin-left: 5px; margin-right: 5px">              
                 <table class="table table-striped table-bordered" id="mytable">
                   <thead>
                     <tr>
-                      <!-- <th class="numeric"> BookId </th> -->
-                      <th class="numeric"> BookCode </th>
-                      <th class="numeric"> BookName </th>
-                      <th class="numeric"> CategoryName </th>
-                      <th class="numeric"> Description </th>
-                      
-                      <th class="numeric"> ISBN </th>
+                      <th class="numeric">BookTitle</th>
                       <th class="numeric"> BookAuthor </th>
-                      <th class="numeric"> BookLocation </th>
-                      <!-- <th class="numeric"> BookInfo </th>
-                      <th class="numeric"> Operation </th> -->
+                      <th class="numeric"> Category </th>
+                      <th> ISBN </th>               
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(info,index) in books" :key="index">
-                      <!-- <td> {{info[0].id}} </td> -->
-                      <td> {{info[0].bookcode}} </td>
-                      <td> {{info[0].bookname}} </td>
-                      <td> {{info[1].name}}</td>
-                      <td> {{info[0].description}} </td>
-                      
-                      <td> {{info[0].ISBN}} </td>
-                      <td> {{info[0].bookauthor}} </td>
-                      <td> {{info[0].booklocation}}</td>
-                      <!-- <td> {{info[3]}}</td>
-                      <td>
-                      </td> -->
+                     <td> <router-link :to="{name: 'bookinfo', params: {isbn: index}}"> {{info[0].title}}</router-link></td>
+                      <td> {{info[0].author}} </td>
+                      <td> {{info[0].category}}</td>
+                      <td> {{index}}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> 
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -71,6 +56,11 @@ export default {
         })
     },
     methods: {
+      linktoindex(){
+        this.$router.push({//你需要接受路由的参数再跳转
+          path: '/library/index'
+        });
+      }
     }
 }
 </script>

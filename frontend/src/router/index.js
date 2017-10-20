@@ -20,6 +20,10 @@ export default new Router({
       path: '/test',
       component: resolve => require(['@/pages/test.vue'], resolve)
     },
+    {
+      path: '/',
+      redirect: '/index'
+    },
     topLayoutBarLayout,
     fullLayout,
     noneLayout,

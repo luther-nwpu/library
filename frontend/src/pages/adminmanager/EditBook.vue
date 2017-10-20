@@ -1,8 +1,15 @@
 <template>
     <div>
-    <br>
-    <h3> Add Book (Remarks: You Can Input The ISBN Enter Quickly Fill The Info) </h3>
-    <br>
+        <br>
+            <div class = "row">
+            <div class = "col-md-2">
+                <button class = "btn btn-primary" @click = "ReturnLast()"> Return Last</button>
+            </div>
+            <div class = "col-md-10">
+                <h3> Add Book (Remarks: You Can Input The ISBN Enter Quickly Fill The Info) </h3>
+            </div>
+            </div>
+        <br>
     <div class = "row">
         <span class = "col-md-2"><h1> title:</h1></span>
         <span class = "col-md-3">
@@ -63,30 +70,6 @@
         </span>
     </div>
     <br>
-    <div class="demo-upload-list" v-for="(item,index) in imgs" :key="index">
-        <img :src="item.imgurl">
-        <div class="demo-upload-list-cover">
-            <Icon type="ios-trash-outline" @click.native="handleRemove(item, index)"></Icon>
-        </div>
-    </div>
-    <Upload
-        name = "photo"
-        enctype="multipart/form-data"
-        :with-credentials="true"
-        :show-upload-list="false"
-        :on-success="handleSuccess"
-        :format="['jpg','jpeg','png']"
-        :max-size="2048"
-        :on-format-error="handleFormatError"
-        :on-exceeded-size="handleMaxSize"
-        type="drag"
-        action="/api/upload"
-        style="display: inline-block;width:58px;">
-        <div style="width: 58px;height:58px;line-height: 58px;">
-            <Icon type="camera" size="20"></Icon>
-        </div>
-    </Upload>
-
     <div class = "row">
         <span class = "col-md-3">
             <button class = "btn btn-primary" @click = "updateBook()"> Update Book </button>
@@ -94,7 +77,38 @@
         <span class = "col-md-3">
             <button class = "btn btn-primary"  @click = "ReturnLast()"> Cancel </button>
         </span>
-    </div>  
+    </div> 
+    <br>
+    <h3 style = "float: left; margin-left: 50px">Picture Upload:</h3>
+    <div class = "row">  
+        <div class = "col-md-9">
+            <div class="demo-upload-list" v-for="(item,index) in imgs" :key="index">
+                <img :src="item.imgurl">
+                <div class="demo-upload-list-cover">
+                    <Icon type="ios-trash-outline" @click.native="handleRemove(item, index)"></Icon>
+                </div>
+            </div>
+            <Upload
+                name = "photo"
+                enctype="multipart/form-data"
+                :with-credentials="true"
+                :show-upload-list="false"
+                :on-success="handleSuccess"
+                :format="['jpg','jpeg','png']"
+                :max-size="2048"
+                :on-format-error="handleFormatError"
+                :on-exceeded-size="handleMaxSize"
+                type="drag"
+                action="/api/upload"
+                style="display: inline-block;width:58px;">
+                <div style="width: 58px;height:58px;line-height: 58px;">
+                    <Icon type="camera" size="20"></Icon>
+                </div>
+            </Upload>
+        </div>
+    </div>
+    <br>
+    <div>Modify Location </div>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">This ISBN Book</h3>
@@ -103,7 +117,7 @@
         <div class="box">
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
+              <table class="table table-hover table-border">
                 <tbody>
                     <tr>
                         <th>BookID</th>
@@ -116,7 +130,14 @@
                         <td>{{content[0].id}}</td>
                         <td>{{content[0].title}}</td>
                         <td><input type = "text" v-model = "content[0].location" class = "form-control" width="60px"/></td>
-                        <td> {{content[1]}}</td>
+                        <td> 
+                        <div v-if="!content[1]">
+                            Availiable
+                        </div>
+                        <div v-else-if = "content[1]">
+                            {{content[1]}}
+                        </div>
+                        </td>
                         <td> <button @click = "updatelocation(content[0].location,content[0].id)">Update Book </button> <button @click = "deletebook(content[0].id, index)">Delete Book </button> </td>
                     </tr>
                 </tbody>

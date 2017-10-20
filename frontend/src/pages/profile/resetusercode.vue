@@ -24,7 +24,8 @@
                 <input type = "text" class = "form-control" v-model = "repeatusercode"/>
                 </span>
             </div>
-            <button @click="ModifyUserCode()"> Modify User Code </button>
+            <br>
+            <button class = "btn btn-primary" @click="ModifyUserCode()"> Modify User Code </button>
         </div>
     </div>
 </template>

@@ -14,16 +14,6 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu"  role="button">
             <span class="sr-only" @click ="shutmenu()">Toggle navigation</span>
             </a>
-            <div class ="col-md-3">
-            <div class="input-group" style ="margin-top: 10px">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                    </button>
-                </span>
-            </div>
-            </div>
-            <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <div v-if="logined == 1">
                     <ul class="nav navbar-nav">

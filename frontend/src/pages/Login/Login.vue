@@ -20,11 +20,6 @@
       </div>
       <!-- <div class="row"> -->
         <!-- <div class="col-xs-8" style="margin-left:-20px"> -->
-          <div class="checkbox icheck pull-left">
-            <label>
-              <input type="checkbox"> Remember Me
-            </label>
-          </div>
         <!-- </div> -->
         <!-- /.col -->
         <!-- <div class="col-xs-4"> -->
@@ -37,7 +32,6 @@
     <!-- /.social-auth-links -->
     <div class="checkbox no-padding" style="margin-bottom:25px">
           <a href="#/login/authregister" class="a pull-left">Register Now</a>
-          <a href="#" class="a pull-right">Forgot Password ?</a>
     </div>
 
   </div>

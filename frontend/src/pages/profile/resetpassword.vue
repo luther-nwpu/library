@@ -23,7 +23,8 @@
             <input type = "text" class = "form-control" v-model = "repeatpassword"/>
             </span>
         </div>
-        <button @click = "ResetPassword">Reset Password</button>
+        <br>
+        <button class = "btn btn-primary" @click = "ResetPassword">Reset Password</button>
     </div>
 </template>
 <script>

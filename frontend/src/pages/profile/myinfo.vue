@@ -36,7 +36,8 @@
         <input type = "text" class = "form-control" v-model = "usercollege"/>
         </span>
     </div>
-    <button class="primary" @click="commitdata()">Commit Data</button>
+    <br>
+    <button class="btn btn-primary" @click="commitdata()">Commit Data</button>
     </div>
 </template>
 <script>

@@ -57,7 +57,11 @@ class OrderController extends Controller
 				$order->updated_at = date('Y-m-d H:i:s');
 				$order->type_id = 0;
 				$order->save();
-				return response()->json(['borrow' => true], 200);
+				$array = array();
+				$book = \App\Model\Book::where('id', $order->book_id)
+										->first();
+				array_push($array, $order, $book);
+				return response()->json(['borrow' => true, 'book' => $array], 200);
 			} else {
 				return response()->json(['borrow' => false, 'err' => 'No user'], 200);
 			}
@@ -110,7 +114,7 @@ class OrderController extends Controller
             return response()->json(['renew' => false, 'err' => 'No this BorrowBook'], 200);
         } else {
             // 新建模型对象
-			$order->return_time = date($order->return_time,strtotime('+1 month'));
+			$order->return_time = date('Y-m-d H:i:s', strtotime('+1 month', strtotime($order->return_time)));
             $order->type_id = 1;
             $order->save();		
             return response()->json(['renew' => true], 200);
@@ -174,9 +178,6 @@ class OrderController extends Controller
         return $array;
     }
 
-    public function GetHistoryBookById(){
-
-    }
 	public function GetUserByUserCode(Request $request) {
 		$user = \App\User::where('usercode', $request->usercode)
 							->first();

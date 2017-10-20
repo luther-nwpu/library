@@ -18,7 +18,6 @@
           </thead>
           <tbody>
             <tr v-for="(info,index) in books" :key="index">
-              <!-- <td> {{info[0].id}} </td> -->
               <td> <router-link :to="{name: 'editBook', params: {isbn: index}}"> {{info[0].title}}</router-link></td>
               <td> {{info[0].author}} </td>
               <td> {{info[0].category}}</td>
@@ -36,7 +35,7 @@ import '@/assets/js/jquery.dataTables.min'
 export default {
     data () {
         return {
-            books: ''
+            books: []
         }
     },
     async created () {
@@ -56,6 +55,7 @@ export default {
             if(res.data.delete){
               alert('delete true') 
               this.books.splice(index, 1);
+              this.$forceUpdate()
             } else {
               alert('delete false') 
             }
