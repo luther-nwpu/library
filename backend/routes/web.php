@@ -30,15 +30,15 @@ Route::post("/api/auth/logout", 'AuthController@logout');
 Route::post("/api/order/borrowbook", 'OrderController@BorrowBook');
 Route::post("/api/order/renewbook", 'OrderController@RenewBook');
 Route::post("/api/order/returnbook", 'OrderController@ReturnBook');
-Route::post("/api/order/allborrowbook", 'OrderController@GetBorrowedBook');
+Route::post("/api/order/myborrowbookbyuser", 'OrderController@GetBorrowedBook');
 
 Route::post("/api/order/getUserByUserCode", 'OrderController@GetUserByUserCode');
 
 Route::post("/api/order/findbook" , 'BookManageController@findBook');
 
+
 Route::post("/api/book/findbookByISBN" , 'BookManageController@findBookByISBN');
 Route::post("/api/book/findAllBookByISBN" , 'BookManageController@findAllBookByISBN');
-
 Route::get("/api/book/getall" , 'BookManageController@getAllBook');
 
 Route::group(['middleware' => ['auth']], function () {
@@ -53,13 +53,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/api/auth/resetMyUserCode', 'AuthController@resetMyUserCode'); 
 });
 
+Route::post("/api/book/getBookAllImage" , 'BookManageController@getBookAllImage');
 Route::group(['middleware' => ['manager']], function () {
     Route::post("/api/book/createbook" , 'BookManageController@storeBook');
 	Route::post("/api/book/updatebookByISBN" , 'BookManageController@updateBookISBN');
 	Route::post("/api/book/updatebooklocationById" , 'BookManageController@updateBooklocation');
 	Route::post("/api/book/deletebookById" , 'BookManageController@deleteBookById');
 	Route::post("/api/book/bindBookImage" , 'BookManageController@bindBookImage');
-	Route::post("/api/book/getBookAllImage" , 'BookManageController@getBookAllImage');
 	Route::post("/api/book/CancelBindBookImage" , 'BookManageController@CancelBindBookImage');
 
 	Route::post("/api/book/deletebyIsbn" , 'BookManageController@deleteBookByISBN');

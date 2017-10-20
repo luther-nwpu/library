@@ -5,7 +5,7 @@
             UserCode:<input v-model = "usercode" v-on:blur="getUserInfo()"  v-focus-next-on-enter="'input2'"/>
         </div>
         <div class="col-md-6">
-            Bookcode: <input type = "text"  v-model = "book_id" ref = "input2"/>
+            Bookcode: <input type = "text"  v-model = "book_id" ref = "input2" @keyup.enter = "borrowBook()"/>
         </div>
         {{user}}
         <button @click = "getUserInfo()"> dsadsa</button>
@@ -20,38 +20,25 @@ export default {
             usercode: '',
             book_id: '',
             user: '',
-            bookinfo: ''
+            bookinfo: '',
+            books: []
         }
     },
     methods: {
         async borrowBook() {
-            if(this.email) {
-                var res = await axios.post('/api/order/getuser', {
-                    email: this.email
-                });
-                console.log(res)
-                if(res.data.search == false) {
-                    alert('No This User')
-                } else {
-                    console.log(res.data.user.id)
-                    this.user_id = res.data.user.id
-                    this.user = res.data.user
-                }
+            var res = await axios.post('/api/order/getUserByUserCode', {
+                usercode: this.usercode
+            });
+            console.log(res)
+            if(res.data.get) {
+                this.user = res.data.user
+                var res0 = await axios.post('/api/order/myborrowbookbyuser', {
+                    user_id: this.user.id
+                })
+                console.log(res0)
+                this.books = res0.data
             } else {
-                alert('Please Input User')
-            }
-            if (this.book_id) {
-                var res = await axios.post('/api/order/borrowbook', {
-                    user_id: this.user_id,
-                    book_id: this.book_id
-                });
-                console.log(res)
-                if(res.data.create){
-                    alert("Borrow Success");
-                    this.$Message.info("Borrow Success");
-                } else {
-                    alert('Borrow Failed')
-                }
+                alert('No This User')
             }
         },
         async getUserInfo() {
@@ -59,7 +46,13 @@ export default {
                 usercode: this.usercode
             });
             console.log(res)
-            if(res.data.search) {
+            if(res.data.get) {
+                this.user = res.data.user
+                var res0 = await axios.post('/api/order/myborrowbookbyuser', {
+                    user_id: this.user.id
+                })
+                console.log(res0)
+                this.books = res0.data
             } else {
                 alert('No This User')
             }

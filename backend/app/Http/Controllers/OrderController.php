@@ -9,38 +9,26 @@ class OrderController extends Controller
     // 所有人都可以借， request 存的是当前用户id与书的id book_id    user_id
     public function BorrowBook(Request $request) {
         $book = \App\Model\Order::where('book_id', $request->book_id)
-                                ->where('type_id', '<>', 2)
+                                ->where('type_id', '<', 2)
                                 ->first();
-        $user = \App\User::find($request->user_id);
-        if(!$user)
-        {
-            return response()->json(['create' => false, 'err' => 'No user'], 200);
-        }
-        $borrowbook = \App\Model\Book::find($request->book_id);
-        $hborrowed = \App\Model\Order::where('book_id', $request->book_id)
-                                        -> where('user_id', $request->user_id)
-                                        ->first();
-        if(!$borrowbook)
-        {
-            return response()->json(['create' => false], 200);
-        }
-        if($book){
-            return response()->json(['create' => false], 200);
-        } else {
-            // 新建模型对象
-            if($hborrowed){
-                return response()->json(['create' => false, 'err' => 'Cannt borrow the same book'], 200);
-            }
-            $order = new \App\Model\Order() ;
-            $order->user_id = $request->user_id;
-            $order->book_id = $request->book_id;
-            $order->return_time = date('Y-m-d H:i:s',strtotime('+1 month'));
-            $order->created_at = date('Y-m-d H:i:s');
-            $order->updated_at = date('Y-m-d H:i:s');
-            $order->type_id = 0;
-            $order->save();
-            return response()->json(['create' => true], 200);
-        }
+        if($book) {
+			return response()->json(['borrow' => false, 'err' => 'The Book Already Borrowed'], 200);
+		} else {
+			$user = \App\User::where($request->user_id)
+							->first();
+			if($user) {
+				$order = new \App\Model\Order() ;
+				$order->user_id = $request->user_id;
+				$order->book_id = $request->book_id;
+				$order->return_time = date('Y-m-d H:i:s',strtotime('+1 month'));
+				$order->created_at = date('Y-m-d H:i:s');
+				$order->updated_at = date('Y-m-d H:i:s');
+				$order->type_id = 0;
+				$order->save();
+			} else {
+				return response()->json(['borrow' => false, 'err' => 'No user'], 200);
+			}
+		}
     }
 
     // request book_id 直接还书
@@ -125,7 +113,8 @@ class OrderController extends Controller
     }
 
     public function GetBorrowedBook(Request $request) {
-        $user = \App\User::find($request->user_id);
+        $user = \App\User::where($request->user_id)
+							->first();
         if(!$user){
             return response()->json(['get' => false], 200);
         }
@@ -134,13 +123,13 @@ class OrderController extends Controller
                                 ->get();
         $array = array();
         foreach($orders as $order){
-        $book = \App\Model\Book::where('id', $order->book_id)
-                ->first();
-        $subarray = array();
-        array_push($subarray, $order, $book);
-        array_push($array, $subarray);
+			$book = \App\Model\Book::where('id', $order->book_id)
+								->first();
+			$subarray = array();
+			array_push($subarray, $order, $book);
+			array_push($array, $subarray);
         }
-        return $array;
+        return response()->json(['get' => true, 'book' => $array], 200);
     }
 
     // 我的所有历史读书
